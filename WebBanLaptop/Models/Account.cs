@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,13 @@ namespace WebBanLaptop.Models
 {
     [Table("Account")]
     public class Account
-    {      
+    {
+        public Account()
+        {
+            Feedbacks = new HashSet<Feedback>();
+            Orders = new HashSet<Order>();
+            ReplyFeedbacks = new HashSet<ReplyFeedback>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key] public int Account_id { get; set; }
 
@@ -48,5 +55,8 @@ namespace WebBanLaptop.Models
         public DateTime Update_at { get; set; }
         public string Status { get; set; }
 
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<ReplyFeedback> ReplyFeedbacks { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

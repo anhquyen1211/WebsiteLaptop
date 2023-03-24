@@ -41,5 +41,9 @@ namespace WebBanLaptop.Models
 
         //đặt làm đia chỉ mặc định hay không
         public bool IsDefault { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual Wards Wards { get; set; }
+        public virtual Districts Districts { get; set; }
+        public virtual Provinces Provinces { get; set; }
     }
 }

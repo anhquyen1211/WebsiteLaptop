@@ -131,6 +131,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LQShopDb.cs" />
+    <Compile Include="Migrations\202303240829138_CreateDb.cs" />
+    <Compile Include="Migrations\202303240829138_CreateDb.designer.cs">
+      <DependentUpon>202303240829138_CreateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountAddress.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -138,6 +144,17 @@
     <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\Districts.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderAddress.cs" />
+    <Compile Include="Models\Order_Detail.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductImages.cs" />
+    <Compile Include="Models\Provinces.cs" />
+    <Compile Include="Models\ReplyFeedback.cs" />
+    <Compile Include="Models\Wards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +209,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202303240829138_CreateDb.resx">
+      <DependentUpon>202303240829138_CreateDb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

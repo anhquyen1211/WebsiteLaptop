@@ -4,26 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebBanLaptop.Models
 {
-    [Table("Districts")]
-    public class Districts
+    [Table("Provinces")]
+    public class Provinces
     {
-        //district id
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int District_id { get; set; }
-        [Required]
-        //city id
         public int Province_id { get; set; }
-        //district name
-        [Required]
+
+        [Required(ErrorMessage = "Nhập tên Tỉnh/Thành Phố")]
         [StringLength(50)]
-        public string District_name { get; set; }
-        //district type
+        public string Province_name { get; set; }
+
         [Required]
         [StringLength(20)]
         public string Type { get; set; }
-        public virtual Provinces Provinces { get; set; }
-        public virtual ICollection<Wards> Wards { get; set; }
+        public virtual ICollection<Districts> Districts { get; set; }
         public virtual ICollection<AccountAddress> AccountAddresses { get; set; }
         public virtual ICollection<OrderAddress> OrderAddress { get; set; }
     }

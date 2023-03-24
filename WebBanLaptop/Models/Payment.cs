@@ -7,18 +7,16 @@ using System.Web;
 
 namespace WebBanLaptop.Models
 {
-    [Table("Delivery")]
-    public class Delivery
+    [Table("Payment")]
+    public class Payment
     {
-        public Delivery()
+        public Payment()
         {
             Orders = new HashSet<Order>();
         }
-        [Key] public int Delivery_id { get; set; }
+        [Key] public int Payment_id { get; set; }
 
-        [Required] [StringLength(100)] public string Delivery_name { get; set; }
-
-        [Column(TypeName = "money")] public decimal Price { get; set; }
+        [Required] [StringLength(50)] public string Payment_name { get; set; }
 
         public DateTime Create_at { get; set; }
 
@@ -26,7 +24,7 @@ namespace WebBanLaptop.Models
 
         [StringLength(1)] public string Status { get; set; }
 
-        [Required] [StringLength(20)] public string Update_by { get; set; }
+        [StringLength(20)] public string Update_by { get; set; }
 
         public DateTime? Update_at { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

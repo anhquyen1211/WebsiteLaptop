@@ -10,6 +10,10 @@ namespace WebBanLaptop.Models
     [Table("Brand")]
     public class Brand
     {
+        public Brand()
+        {
+            Products = new HashSet<Product>();
+        }
         [Key] public int Brand_id { get; set; }
 
         [Required] 
@@ -26,5 +30,7 @@ namespace WebBanLaptop.Models
         [StringLength(100)] 
         public string Update_by { get; set; }
         public DateTime Update_at { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+
     }
 }
