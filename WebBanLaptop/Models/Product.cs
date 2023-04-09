@@ -15,7 +15,7 @@ namespace WebBanLaptop.Models
             Order_Detail = new HashSet<Order_Detail>();
             ProductImages = new HashSet<ProductImages>();
         }
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key] [Column(Order = 0)] public int Product_id { get; set; }
 
         [Key]
