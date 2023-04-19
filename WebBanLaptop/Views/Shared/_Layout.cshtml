@@ -22,10 +22,133 @@
 </head>
 <body>
     @Html.Partial("Header_Layout")
+    <!--  Start Offcanvas Mobile Menu Section -->
+    <div id="mobile-menu-offcanvas"
+         class="offcanvas offcanvas-rightside offcanvas-mobile-menu-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close">
+                <i class="ion-android-close"></i>
+            </button>
+        </div>
+        <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-mobile-menu-wrapper">
+            <!-- Start Mobile Menu  -->
+            <div class="mobile-menu-bottom">
+                <!-- Start Mobile Menu Nav -->
+                <div class="offcanvas-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index","Home")"><span>Trang Chủ</span></a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Laptop","Products")"><span>Laptop</span></a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Accessories","Products")"><span>Phụ kiện</span></a>
+                        </li>
+                        <li>
+                            <a><span>Khuyến mãi</span></a>
+                        </li>
+                        <li>
+                            <a><span>Liên Hệ</span></a>
+                        </li>
+                        <li><a href="@Url.Action("ViewCart","Cart")">Giỏ Hàng</a></li>
+                        <li><a href="@Url.Action("Login","Account")">Đăng nhập</a></li>
+                    </ul>
+                </div>
+                <!-- End Mobile Menu Nav -->
+            </div>
+            <!-- End Mobile Menu -->
+            <!-- Start Mobile contact Info -->
+            <div class="mobile-contact-info">
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/Images/logo/logo.png" alt="logo" />
+                    </a>
+                </div>
+                <address class="address">
+                    <span>Địa chỉ: Phường Phương Canh, Quận Nam Từ Liêm, TP.Hà Nội</span>
+                    <span>Điện thoại: 0123456789</span>
+                    <span>Email: leanhquyen1211@gmail.com</span>
+                </address>
+                <ul class="social-link">
+                    <li>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+                <ul class="user-link">
+                    <li><a>Giỏ Hàng</a></li>
+                    <li><a>Thanh Toán</a></li>
+                </ul>
+            </div>
+            <!-- End Mobile contact Info -->
+        </div>
+        <!-- End Offcanvas Mobile Menu Wrapper -->
+    </div>
+    <!-- End Offcanvas Mobile Menu Section -->
+    <!-- Start Offcanvas Mobile Menu Section -->
+    <div id="offcanvas-about"
+         class="offcanvas offcanvas-rightside offcanvas-mobile-about-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close">
+                <i class="ion-android-close"></i>
+            </button>
+        </div>
+        <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <!-- Start Mobile contact Info -->
+        <div class="mobile-contact-info">
+            <div class="logo">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/Images/logo/logo.png" alt="logo" />
+                </a>
+            </div>
+            <address class="address">
+                <span>Địa chỉ: Phường Phương Canh, Quận Nam Từ Liêm, TP.Hà Nội</span>
+                <span>Điện thoại: 0123456789</span>
+                <span>Email: leanhquyen1211@gmail.com</span>
+            </address>
+            <ul class="social-link">
+                <li>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                </li>
+            </ul>
+
+            <ul class="user-link">
+                <li><a href="@Url.Action("ViewCart", "Cart")">Giỏ Hàng</a></li>
+                <li><a href="checkout.html">Thanh Toán</a></li>
+            </ul>
+        </div>
+
+        <!-- End Mobile contact Info -->
+    </div>
+    <!-- End Offcanvas Mobile Menu Section -->
+    @Html.Action("PreviewCart", "Cart")
     <!-- Start Offcanvas Search Bar Section -->
     <div id="search" class="search-modal">
         <button type="button" class="close">×</button>
-        <form action="@Url.Action("SearchResult", "Products")">
+        <form action="@Url.Action("SearchResult", "Product")">
             <input autocomplete="off" name="s" type="search" placeholder="Nhập thông tin tại đây" />
             <button type="submit" class="btn btn-lg btn-golden">Tìm Kiếm</button>
         </form>
@@ -34,7 +157,7 @@
     <!-- Offcanvas Overlay -->
     <div class="offcanvas-overlay"></div>
     @RenderBody()
-    @*@Html.Partial("_MessageAlert")*@
+    @Html.Partial("_MessageAlert")
     @Html.Partial("Footer_Layout")
     <!-- material-scrolltop button -->
     <button class="material-scrolltop" type="button"></button>
@@ -103,7 +226,7 @@
     <!-- End Modal Add cart -->
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/UserJS/vendor/vendor.min.js"></script>
     <script src="~/Scripts/UserJS/plugins/plugins.min.js"></script>

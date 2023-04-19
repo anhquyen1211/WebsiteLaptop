@@ -6,7 +6,7 @@ $(document).ready(function () {
         $.get("/Account/GetDistrictsList", { province_id: $('#province').val() }, function (data) {
             $('#district').html("<option value>Quận/ Huyện</option>");
             $.each(data, function (index, row) {
-                $('#district').append("<option value='" + row.district_id + "'>" + row.type + " " + row.district_name + "</option>")
+                $('#district').append("<option value='" + row.District_id + "'>" + row.Type + " " + row.District_name + "</option>")
             });
         });
     })
@@ -16,7 +16,7 @@ $(document).ready(function () {
         $.get("/Account/GetWardsList", { district_id: $('#district').val() }, function (data) {
             $('#ward').html("<option value>Phường/ Xã</option>");
             $.each(data, function (index, row) {
-                $('#ward').append("<option value='" + row.ward_id + "'>" + row.type + " " + row.ward_name + "</option>")
+                $('#ward').append("<option value='" + row.Ward_id + "'>" + row.Type + " " + row.Ward_name + "</option>")
             });
         });
     })
@@ -158,7 +158,7 @@ $(document).ready(function () {
         $.get("/Account/GetDistrictsList", { province_id: $('#province_edit').val() }, function (data) {
             $('#district_edit').html("<option value>Quận/ Huyện</option>");
             $.each(data, function (index, row) {
-                $('#district_edit').append("<option value='" + row.district_id + "'>" + row.type + " " + row.district_name + "</option>")
+                $('#district_edit').append("<option value='" + row.District_id + "'>" + row.Type + " " + row.District_name + "</option>")
             });
         });
     })
@@ -168,7 +168,7 @@ $(document).ready(function () {
         $.get("/Account/GetWardsList", { district_id: $('#district_edit').val() }, function (data) {
             $('#ward_edit').html("<option value>Phường/ Xã</option>");
             $.each(data, function (index, row) {
-                $('#ward_edit').append("<option value='" + row.ward_id + "'>" + row.type + " " + row.ward_name + "</option>")
+                $('#ward_edit').append("<option value='" + row.Ward_id + "'>" + row.Type + " " + row.Ward_name + "</option>")
             });
         });
     })

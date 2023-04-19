@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebBanLaptop.Common;
+using WebBanLaptop.Common.Helpers;
 using WebBanLaptop.Models;
 
 namespace WebBanLaptop.Controllers
@@ -105,6 +107,165 @@ namespace WebBanLaptop.Controllers
             Notification.SetNotification1_5s("Đăng ký thành công", "success");           
             db.SaveChanges(); //add dữ liệu vào database          
             return RedirectToAction("Login", "Account");
+        }
+        //Thêm mới địa chỉ 
+        public ActionResult AddressCreate(AccountAddress address)
+        {
+            bool result = false;
+            var userid = User.Identity.GetUserID();
+            var checkdefault = db.AccountAddresses.Where(a => a.Account_id == userid).ToList();
+            var limit_address = db.AccountAddresses.Where(a => a.Account_id == userid).ToList();
+            try
+            {
+                if (limit_address.Count() == 4)//tối đa 4 ký tự
+                {
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                foreach (var item in checkdefault)
+                {
+                    if (item.IsDefault == true && address.IsDefault == true)
+                    {
+                        item.IsDefault = false;
+                        db.SaveChanges();
+                    }
+                }
+                address.Account_id = userid;
+                db.AccountAddresses.Add(address);
+                db.SaveChanges();
+                result = true;
+                Notification.SetNotification1_5s("Thêm thành công", "success");
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+        //Sửa địa chỉ
+        [HttpPost]
+        public JsonResult AddressEdit(int id, string username, string phonenumber, int province_id, int district_id, int ward_id, string address_content)
+        {
+            var address = db.AccountAddresses.FirstOrDefault(m => m.Account_address_id == id);
+            bool result;
+            if (address != null)
+            {
+                address.Province_id = province_id;
+                address.Account_username = username;
+                address.Account_phonenumber = phonenumber;
+                address.District_id = district_id;
+                address.Ward_id = ward_id;
+                address.Content = address_content;
+                address.Account_id = User.Identity.GetUserID();
+                db.SaveChanges();
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //Thay đổi địa chỉ mặc định
+        public JsonResult DefaultAddress(int id)
+        {
+            bool result = false;
+            var userid = User.Identity.GetUserID();
+            var address = db.AccountAddresses.FirstOrDefault(m => m.Account_address_id == id);
+            var checkdefault = db.AccountAddresses.ToList();
+            if (User.Identity.IsAuthenticated && !address.IsDefault == true)
+            {
+                foreach (var item in checkdefault)
+                {
+                    if (item.IsDefault == true && item.Account_id == userid)
+                    {
+                        item.IsDefault = false;
+                        db.SaveChanges();
+                    }
+                }
+                address.IsDefault = true;
+                db.SaveChanges();
+                result = true;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+        //Xóa địa chỉ
+        [HttpPost]
+        public JsonResult AddressDelete(int id)
+        {
+            bool result = false;
+            try
+            {
+                var address = db.AccountAddresses.FirstOrDefault(m => m.Account_address_id == id);
+                db.AccountAddresses.Remove(address);
+                db.SaveChanges();
+                result = true;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+        //lấy danh sách quận huyện
+        public JsonResult GetDistrictsList(int province_id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            List<Districts> districtslist = db.Districts.Where(d => d.Province_id == province_id).OrderBy(d => d.Type).ThenBy(d => d.District_name).ToList();
+            return Json(districtslist, JsonRequestBehavior.AllowGet);
+        }
+        //lấy danh sách phường xã
+        public JsonResult GetWardsList(int district_id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            List<Wards> wardslist = db.Wards.Where(w => w.District_id == district_id).OrderBy(w => w.Type).ThenBy(w => w.Ward_name).ToList();
+            return Json(wardslist, JsonRequestBehavior.AllowGet);
+        }
+        //Lịch sử mua hàng
+        public ActionResult TrackingOrder(int? page)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View("TrackingOrder", GetOrder(page));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        //Chi tiết đơn hàng đã mua
+        public ActionResult TrackingOrderDetail(int id)
+        {
+            List<Order_Detail> order = db.Order_Detail.Where(p => p.Order_id == id).ToList();
+            ViewBag.Order = db.Orders.FirstOrDefault(p => p.Order_id == id);
+            ViewBag.OrderID = id;
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        //đánh số trang
+        private IPagedList GetOrder(int? page)
+        {
+            var userId = User.Identity.GetUserID();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1); //đánh số trang
+            var list = db.Orders.Where(p => p.Account_id == userId).OrderByDescending(p => p.Order_id)
+                .ToPagedList(pageNumber, pageSize);
+            return list;
+        }
+        public ActionResult UserLogged()
+        {
+            // Được gọi khi nhấn [Thanh toán]
+            return Json(User.Identity.IsAuthenticated, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -84,7 +84,7 @@
                                 {
                                     <div class="product-default-single-item product-color--golden swiper-slide">
                                         <div class="image-box">
-                                            <a href="#" class="image-link">
+                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
                                             </a>
                                             @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
@@ -95,7 +95,7 @@
                                             }
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    @*<input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />*@
+                                                    <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
                                                     <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
                                                 </div>
                                                 <div class="action-link-right">
@@ -182,7 +182,7 @@
                                 {
                                     <div class="product-default-single-item product-color--aqua swiper-slide">
                                         <div class="image-box">
-                                            <a href="#" class="image-link">
+                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
                                             </a>
                                             @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
@@ -193,7 +193,7 @@
                                             }
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    @*<input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />*@
+                                                    <input step="1" id="quantity" hidden autocomplete="off" value="1" type="number" />
                                                     <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
                                                 </div>
                                                 <div class="action-link-right">
@@ -276,7 +276,7 @@
                                 {
                                     <div class="product-default-single-item product-color--aqua swiper-slide">
                                         <div class="image-box">
-                                            <a href="#" class="image-link">
+                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
                                             </a>
                                             @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
@@ -287,7 +287,7 @@
                                             }
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    @*<input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />*@
+                                                    <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
                                                     <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
                                                 </div>
                                                 <div class="action-link-right">
@@ -370,7 +370,7 @@
                                 {
                                     <div class="product-default-single-item product-color--aqua swiper-slide">
                                         <div class="image-box">
-                                            <a href="#" class="image-link">
+                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
                                             </a>
                                             @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
@@ -381,7 +381,7 @@
                                             }
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    @*<input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />*@
+                                                    <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
                                                     <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
                                                 </div>
                                                 <div class="action-link-right">
@@ -506,3 +506,6 @@
     </div>
 </div>
 <!-- End Service Section -->
+@section scripts{
+    <script src="~/Scripts/UserJS/add-to-cart.js"></script>
+}
