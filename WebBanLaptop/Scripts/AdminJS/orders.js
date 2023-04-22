@@ -1,12 +1,12 @@
 ﻿const UpdateModal = $('#update-order-modal');
-const cancleModal = $('#cancle-modal');
+const cancelModal = $('#cancel-modal');
 let orderId;
 let OrderStatus;
 let statusName;
 let att
 $('.dimis-modal').click(function () {
     UpdateModal.modal('hide');
-    cancleModal.modal('hide');
+    cancelModal.modal('hide');
 });
 //1. Thay đổi trạng thái sang đang xử lý
 var onProcessOpen = function (id) {
@@ -32,7 +32,7 @@ var CompletedOpen = function (id) {
 $('#update__submit').click(function () {
     $.ajax({
         type: "POST",
-        url: '/Orders/UpdateOrder',
+        url: '/Order/UpdateOrder',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: orderId, status: OrderStatus }),
         dataType: "json",
@@ -104,15 +104,15 @@ $('#update__submit').click(function () {
     });
 });
 //3. Hủy đơn hàng
-var cancleOpen = function (id) {
-    cancleModal.find('#cancle__id').text(id);
-    cancleModal.modal('show');
+var cancelOpen = function (id) {
+    cancelModal.find('#cancel__id').text(id);
+    cancelModal.modal('show');
     orderId = id;
 }
-$('#cancle__submit').click(function () {
+$('#cancel__submit').click(function () {
     $.ajax({
         type: "POST",
-        url: '/Orders/CancleOrder',
+        url: '/Order/CancelOrder',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: orderId }),
         dataType: "json",
@@ -132,7 +132,7 @@ $('#cancle__submit').click(function () {
                     icon: 'success',
                     title: 'Hủy đơn hàng thành công'
                 })
-                cancleModal.modal('hide');
+                cancelModal.modal('hide');
                 let countTrash = $('#count-trash').text();
                 let newCount = Number(countTrash)+1;
                 $('#count-trash').text(newCount);
