@@ -13,6 +13,13 @@ namespace WebBanLaptop
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //rút gọn link tìm kiếm sản phẩm
+            routes.MapRoute(
+              name: "search",
+              url: "search",
+             defaults: new { Controller = "Product", action = "SearchResult" }
+            );
+
             //rút gọn link chi tiết sản phẩm
             routes.MapRoute(
                 name: "chi tiet san pham",
@@ -34,6 +41,13 @@ namespace WebBanLaptop
                 defaults: new { controller = "Product", action = "Accessory" }
             );
 
+            //rút gọn link thông tin cá nhan
+            routes.MapRoute(
+              name: "Thong tin ca nhan",
+              url: "infor",
+              defaults: new { controller = "Account", action = "Editprofile", id = UrlParameter.Optional }
+            );
+
             //rút gọn link đăng nhập
             routes.MapRoute(
                 name: "Dang nhap",
@@ -48,7 +62,35 @@ namespace WebBanLaptop
                 defaults: new { controller = "Account", action = "Register", id = UrlParameter.Optional }
             );
 
-            //rút gọn link giỏ hàng
+            //thay đổi mật khảu
+            routes.MapRoute(
+              name: "doi mat khau",
+              url: "change_password",
+              defaults: new { controller = "Account", action = "ChangePassword", id = UrlParameter.Optional }
+            );
+
+            //xem chi tiết đơn hàng
+            routes.MapRoute(
+              name: "chi tiet don hang",
+              url: "order_detail/{id}",
+              defaults: new { controller = "Account", action = "TrackingOrderDetail", id = UrlParameter.Optional }
+            );
+
+            //quản lý địa chỉ
+            routes.MapRoute(
+              name: "quan ly dia chi",
+              url: "list_address",
+              defaults: new { controller = "Account", action = "Address", id = UrlParameter.Optional }
+            );
+
+            //rút gọn link quản lý đơn hàng
+            routes.MapRoute(
+              name: "lich su mua hang",
+              url: "list_order",
+              defaults: new { controller = "Account", action = "TrackingOrder", id = UrlParameter.Optional }
+            );
+
+            //rút gọn link thanh toán
             routes.MapRoute(
                name: "Thanh toan",
                url: "checkout",
