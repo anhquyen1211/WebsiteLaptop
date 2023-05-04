@@ -1,0 +1,156 @@
+﻿@model WebBanLaptop.Models.Account
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/Main_Layout.cshtml";
+    var listAddress = (List<WebBanLaptop.Models.AccountAddress>)ViewBag.ListAddress;
+    int i = 0;
+}
+<!--begin::content-->
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Thông tin tài khoản</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-300 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Tài khoản</a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-dark">Thông tin tài khoản</li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div class="btn btn-sm btn-flex fw-bolder">
+                <a onclick="window.history.go(-1)" class="btn btn-sm btn-primary" data-bs-toggle="modal">
+                    <span class="svg-icon svg-icon-2">
+                        <i class='bx bx-undo' style="font-size: 20px;"></i>
+                    </span>
+                    Quay lại
+                </a>
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Navbar-->
+            <div class="card mb-5 mb-xl-10">
+                <div class="card-body pt-9 pb-0">
+                    <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                        <div class="me-7 mb-4">
+                            <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                                <img src="@Model.Avatar" alt="@Model.Name" style="object-fit:cover;">
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">@Model.Email</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Navbar-->
+            <!--begin::details View-->
+            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                <div class="card-body p-9">
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">ID</label>
+                        <div class="col-lg-8">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Account_id</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Họ tên</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Name</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Email</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Email</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Số điện thoại</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Phone</span>
+                        </div>
+                    </div>
+                    @foreach (var item in listAddress)
+                    {
+                        i++;
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">Địa chỉ @i</label>
+                            <div class="col-lg-8 fv-row">
+                                <span class="fw-bold fs-6 text-gray-800">@item.Content, @item.Wards.Type @item.Wards.Ward_name, @item.Districts.Type @item.Districts.District_name, @item.Provinces.Province_name</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Trạng thái</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@(Model.Status.Trim() == "1" ? "Đang hoạt động": "Vô hiệu hóa") </span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Ngày tạo</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Create_at.ToString("dd-MM-yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Ngày cập nhật</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Update_at.ToString("dd-MM-yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Người tạo</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Create_by</span>
+                        </div>
+                    </div>
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">Người cập nhật</label>
+                        <div class="col-lg-8 fv-row">
+                            <span class="fw-bold fs-6 text-gray-800">@Model.Update_by</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::details View-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->

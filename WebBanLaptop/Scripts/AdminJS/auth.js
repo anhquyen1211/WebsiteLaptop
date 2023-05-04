@@ -1,4 +1,4 @@
-﻿//3. Xóa
+﻿//1. change role
 let disableModal = $('#disable-modal');
 let activeModal = $('#active-modal');
 $('.dimis-modal').click(function () {
@@ -106,6 +106,23 @@ $('#disable__submit').click(function () {
                 $("#item_" + accountID).remove();
                 return;
             }
+            else {
+                disableModal.modal('hide');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Quản trị viên mới có quyền vô hiệu hóa'
+                })
+            }
         },
         error: function () {
             const Toast = Swal.mixin({
@@ -142,7 +159,7 @@ $('#active__submit').click(function () {
         dataType: "json",
         success: function (result) {
             if (result == "success") {
-                disableModal.modal('hide');
+                activeModal.modal('hide');
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -158,8 +175,24 @@ $('#active__submit').click(function () {
                     title: 'Khôi phục tài khoản thành công'
                 })
                 $("#item_" + accountID).remove();
-                activeModal.modal('hide');
                 return;
+            }
+            else {
+                activeModal.modal('hide');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Quản trị viên mới có quyền khôi phục'
+                })
             }
         },
         error: function () {
