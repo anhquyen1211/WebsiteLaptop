@@ -1,7 +1,6 @@
 ﻿////1. Thêm mới 
 ////2. Chỉnh sửa
 ////3. Xóa
-////4. Tìm kiếm gợi ý
 ////------------------------------------------------/
 const createModal = $('#create-modal')
 const editModal = $('#edit-modal')
@@ -37,7 +36,7 @@ $('#create__save').click(function () {
     }
     return $.ajax({
         type: "POST",
-        url: '/Brands/Create',
+        url: '/Brand/Create',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ brandName: name }),
         dataType: "json",
@@ -127,7 +126,7 @@ $('#edit__save').click(function () {
     }
     return $.ajax({
         type: "POST",
-        url: '/Brands/Edit',
+        url: '/Brand/Edit',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: brandID, brandName: brandName }),
         dataType: "json",
@@ -197,7 +196,7 @@ var deleteOpen = function (id, name) {
 $('#delete__submit').click(function () {
     $.ajax({
         type: "POST",
-        url: '/Brands/Delete',
+        url: '/Brand/Delete',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: brandID }),
         dataType: "json",
