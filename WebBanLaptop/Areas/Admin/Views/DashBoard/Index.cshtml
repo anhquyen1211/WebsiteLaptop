@@ -6,6 +6,8 @@
     var ListOrderDetail = (List<WebBanLaptop.Models.Order_Detail>)ViewBag.ListOrderDetail;
     var OrderDetail = (List<WebBanLaptop.Models.Order_Detail>)ViewBag.OrderDetail;
     var listOrder = (List<WebBanLaptop.Models.Order>)ViewBag.ListOrder;
+    var statistical = (List<WebBanLaptop.Models.Order>)ViewBag.Statistical;
+    double statistical_price = Convert.ToDouble(statistical.Where(m => m.Status == "3").Sum(m => m.Total));
     DateTime getLastMonth = DateTime.Now.AddMonths(-1);
     double totalOrderThisMonth = Convert.ToDouble(Order.Where(m => m.Order_date.Month == DateTime.Now.Month && m.Order_date.Year == DateTime.Now.Year && m.Status == "3").Count());
     double totalOrderLastMonth = Convert.ToDouble(Order.Where(m => m.Order_date.Month == getLastMonth.Month && m.Order_date.Year == DateTime.Now.Year && m.Status == "3").Count());
@@ -57,6 +59,38 @@
     <div class="container-xxl" id="kt_content_container">
         <!--begin::Row-->
         <div class="row g-5 g-xl-10">
+            <div class="col-xl-12 mb-5 mb-xl-10">
+                <div class="card card-flush h-xl-100">
+                    <div class="card-header pt-7">
+                        <!--begin::Title-->
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bolder text-dark">Thống kê</span>
+                        </h3>
+                        <!--end::Title-->
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <table class="table align-middle table-row-dashed fs-6 gy-3">
+                                <tr>
+                                    <td>Từ ngày</td>
+                                    <td><input type="datetime-local" id="from-date" name="from-date" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Đến ngày ngày</td>
+                                    <td><input type="datetime-local" id="to-date" name="to-date" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><input type="submit" value="Thống kê" onclick="Statistical(@statistical_price)" /></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+        <!--begin::Row-->
+        <div class="row g-5 g-xl-10">
             <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
                 <!--begin::Card widget 4-->
                 <div class="card card-flush h-md-50 mb-5 mb-xl-10">
@@ -70,7 +104,7 @@
                                 <span class="fs-4 fw-bold text-gray-400 me-1 align-self-start">₫</span>
                                 <!--end::Currency-->
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1">@Order.Where(m => m.Order_date.Month == DateTime.Now.Month && m.Order_date.Year == DateTime.Now.Year).Sum(m => m.Total).ToString("#,0")</span>
+                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1" id="statistical_price">@Order.Where(m => m.Order_date.Month == DateTime.Now.Month && m.Order_date.Year == DateTime.Now.Year).Sum(m => m.Total).ToString("#,0")</span>
                                 <!--end::Amount-->
                                 <!--begin::Badge-->
                                 @if (totalPriceOrderLastMonth < totalPriceOrderThisMonth)
@@ -467,3 +501,8 @@
     <!--end::Container-->
 </div>
 <!--end::Post-->
+<script>
+    function Statistical(price) {
+        $("#statistical_price").text(price);
+    }
+</script>
