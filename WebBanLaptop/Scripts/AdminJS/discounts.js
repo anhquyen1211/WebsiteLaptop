@@ -153,7 +153,7 @@ $('#create__save').click(function () {
     else {
         $.ajax({
             type: "POST",
-            url: '/Discounts/Create',
+            url: '/Discount/Create',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ discountPrice: price, discountStart: start, discountEnd: end, discountCode: code, quantity:quan }),
             dataType: "json",
@@ -271,7 +271,7 @@ $('#edit__save').click(function () {
     else {
         $.ajax({
             type: "POST",
-            url: '/Discounts/Edit',
+            url: '/Discount/Edit',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ id: discoundID, discountPrice: price, discountStart: start, discountEnd: end, discountCode: code, quantity:quan  }),
             dataType: "json",
@@ -346,7 +346,7 @@ var deleteOpen = function (id, name) {
 $('#delete__submit').click(function () {
     $.ajax({
         type: "POST",
-        url: '/Discounts/Delete',
+        url: '/Discount/Delete',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: discoundID }),
         dataType: "json",

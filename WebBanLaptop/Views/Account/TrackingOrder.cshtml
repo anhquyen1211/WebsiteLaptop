@@ -1,10 +1,12 @@
 ﻿@using WebBanLaptop.Common.Helpers
 @model PagedList.IPagedList<WebBanLaptop.Models.Order>
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Lịch sử mua hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
 }
-
+<link rel="stylesheet" href="~/Content/PagedList.css" />
 <!--start tracking order-->
 @if (User.Identity.IsAuthenticated)
 {
@@ -58,8 +60,9 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
+                                            i++;
                                             <tr>
-                                                <td>#@item.Order_id</td>
+                                                <td>@i</td>
                                                 <td>@item.Order_date.ToString("HH:mm dd-MM-yyyy")</td>
                                                 <td>@(item.Status == "1" ? "Chờ xử lý": item.Status == "2"? "Đang xử lý" : item.Status == "3" ? "Hoàn thành": "Bị hủy")</td>
                                                 <td>@item.Order_Detail.Sum(m => m.Quantity)</td>
@@ -71,11 +74,12 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- Start Pagination -->
-                        @*<div class="page-pagination text-center d-flex justify-content-center" data-aos="fade-up" data-aos-delay="0">
-                            @Html.Partial("Pager", Model)
-                        </div>*@
-                        <!-- End Pagination -->
+                        <div class="mt-5 d-flex align-items-center justify-content-center" data-aos="fade-up" data-aos-delay="0">
+                            <div>
+                                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                                @Html.PagedListPager(Model, page => Url.Action("TrackingOrder", new { page }))
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

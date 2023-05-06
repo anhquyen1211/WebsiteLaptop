@@ -49,24 +49,7 @@ var CreateReplyFeedback = function (id, product_name, content, acc_name) {
                 icon: 'warning',
                 title: 'Vui lòng nhập nội dung bình luận!'
             })
-        }
-        else if (_reply_content.length < 20) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 2500,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            Toast.fire({
-                icon: 'warning',
-                title: 'Nội dung tối thiểu 20 ký tự'
-            })
-            return false;
-        }
+        }       
         else if (_reply_content.length > 500) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -87,7 +70,7 @@ var CreateReplyFeedback = function (id, product_name, content, acc_name) {
         else {
             $.ajax({
                 type: "POST",
-                url: '/Feedbacks/ReplyComment',
+                url: '/Feedback/ReplyComment',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ id: _id, reply_content: _reply_content }),
                 dataType: "json",

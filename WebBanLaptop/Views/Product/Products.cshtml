@@ -1,12 +1,13 @@
-﻿@using PagedList
-@model IPagedList<WebBanLaptop.Models.Product>
+﻿@model PagedList.IPagedList<WebBanLaptop.Models.Product>
+@using PagedList.Mvc
 @{
     ViewBag.Title = ViewBag.Type;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var AvgFeedback = (List<WebBanLaptop.Models.Feedback>)ViewBag.AvgFeedback;
     var listOrderDetail = (List<WebBanLaptop.Models.Order_Detail>)ViewBag.OrderDetail;
+    var curAction = ViewContext.RouteData.Values["action"].ToString(); //lấy giá trị actionName của Url hiện tại của trang
 }
-@*<link href="~/Content/UserCSS/PagedList.css" rel="stylesheet" />*@
+<link rel="stylesheet" href="~/Content/PagedList.css" />
 <!-- ...:::: Start Breadcrumb Section:::... -->
 <div class="breadcrumb-section breadcrumb-bg-color--black">
     <div class="breadcrumb-wrapper">
@@ -44,8 +45,8 @@
                         <h6 class="sidebar-title">DANH MỤC</h6>
                         <div class="sidebar-content">
                             <ul class="sidebar-menu">
-                                <li><a href="#">Laptop</a></li>
-                                <li><a href="#"> Phụ kiện</a></li>
+                                <li><a class="@(ViewBag.Type == "Laptop" ? "text-primary" : "")" href="@Url.Action("Laptop", "Product")">Laptop</a></li>
+                                <li><a class="@(ViewBag.Type == "Phụ kiện" ? "text-primary" : "")" href="@Url.Action("Accessory", "Product")"> Phụ kiện</a></li>
                             </ul>
                         </div>
                     </div> <!-- End Single Sidebar Widget -->
@@ -468,12 +469,14 @@
                             </div>
                         </div>
                     </div>
-                </div> <!-- End Tab Wrapper -->
-                <!-- Start Pagination -->
-                @*<div class="page-pagination text-center d-flex justify-content-center" data-aos="fade-up" data-aos-delay="0">
-                    @Html.Partial("Pager", Model)
-                </div>*@
-                <!-- End Pagination -->
+                </div> 
+                <!-- End Tab Wrapper -->
+                <div class="d-flex align-items-center justify-content-start" data-aos="fade-up" data-aos-delay="0">
+                    <div>
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action(curAction , new { page, ViewBag.CurrentSort }))
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -85,23 +85,6 @@ $('#create_submit_comment').click(function () {
         })
         return false;
     }
-    else if (com_content.length < 20) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 2500,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        Toast.fire({
-            icon: 'warning',
-            title: 'Nội dung bình luận tối thiểu 20 ký tự'
-        })
-        return false;
-    }
     else if (com_content.length > 500) {
         const Toast = Swal.mixin({
             toast: true,
@@ -122,7 +105,7 @@ $('#create_submit_comment').click(function () {
     else {
         $.ajax({
             type: "Post",
-            url: "/Products/ProductComment",
+            url: "/Product/ProductComment",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ productID: proID, discountID: discID, genreID: genreID, rateStar: rateStar, commentContent: com_content }),
             dataType: "json",
@@ -131,7 +114,6 @@ $('#create_submit_comment').click(function () {
                     setTimeout(function () {
                         window.location.reload();
                     }, 1);
-                    //$('.comment-wrapper').append('<input class="form-control" type="text"/>');
                     return;
                 }
             },
@@ -201,23 +183,6 @@ var CreateReplyFeedback = function (id, acc_name) {
                 title: 'Vui lòng nhập nội dung bình luận!'
             })
         }
-        else if (_reply_content.length < 20) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 2500,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            Toast.fire({
-                icon: 'warning',
-                title: 'Nội dung tối thiểu 20 ký tự'
-            })
-            return false;
-        }
         else if (_reply_content.length > 500) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -238,7 +203,7 @@ var CreateReplyFeedback = function (id, acc_name) {
         else {
             $.ajax({
                 type: "POST",
-                url: '/Products/ReplyComment',
+                url: '/Product/ReplyComment',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ id: _id, reply_content: _reply_content }),
                 dataType: "json",
@@ -335,23 +300,6 @@ var createChildReply = function (id, reply_id, acc_name) {
                 title: 'Vui lòng nhập nội dung bình luận!'
             })
         }
-        else if (_child_reply_content.length < 20) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 2500,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            Toast.fire({
-                icon: 'warning',
-                title: 'Nội dung bình luận tối thiểu 20 ký tự'
-            })
-            return false;
-        }
         else if (_child_reply_content.length > 500) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -372,7 +320,7 @@ var createChildReply = function (id, reply_id, acc_name) {
         else {
             $.ajax({
                 type: "POST",
-                url: '/Products/ReplyComment',
+                url: '/Product/ReplyComment',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ id: child_ide, reply_content: _child_reply_content }),
                 dataType: "json",

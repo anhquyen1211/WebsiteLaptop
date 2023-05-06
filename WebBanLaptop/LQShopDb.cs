@@ -8,7 +8,8 @@ namespace WebBanLaptop
     {
         public LQShopDb() : base("LQShopConnectionString")
         {
-            
+            var initializer = new MigrateDatabaseToLatestVersion<LQShopDb, Configuration>();
+            Database.SetInitializer(initializer);
         }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }

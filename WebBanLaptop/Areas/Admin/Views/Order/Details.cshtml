@@ -1,0 +1,454 @@
+﻿@model WebBanLaptop.Models.Order
+@{
+    ViewBag.Title = "Thông tin đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/Main_Layout.cshtml";
+    string noImage = "/Content/Images/no-image.jpg";
+    var listProduct = (List<WebBanLaptop.Models.Order_Detail>)ViewBag.ListProduct;
+    var orderHistory = (List<WebBanLaptop.Models.Order>)ViewBag.OrderHistory;
+    double total = 0;
+}
+<!--begin::content-->
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Thông tin đơn hàng</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-300 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Danh sách đơn hàng</a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-dark">Thông tin đơn hàng</li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div class="btn btn-sm btn-flex fw-bolder">
+                <!--begin::Filter menu-->
+                <!--begin::Primary button-->
+                <a onclick="window.history.go(-1)" class="btn btn-sm btn-primary" data-bs-toggle="modal">
+                    <span class="svg-icon svg-icon-2">
+                        <i class='bx bx-undo' style="font-size: 20px;"></i>
+                    </span>
+                    Quay lại
+                </a>
+                <!--end::Primary button-->
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-10">
+                    <!--begin::Order details page-->
+                    <div class="d-flex flex-column gap-7 gap-lg-10">
+                        <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
+                            <!--begin:::Tabs-->
+                            <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-lg-n2 me-auto">
+                                <!--begin:::Tab item-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">Tóm tắt đơn hàng</a>
+                                </li>
+                                <!--end:::Tab item-->
+                                <!--begin:::Tab item-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_history">Lịch sử mua hàng</a>
+                                </li>
+                                <!--end:::Tab item-->
+                            </ul>
+                            <!--end:::Tabs-->
+                        </div>
+                        <!--begin::Order summary-->
+                        <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                            <!--begin::Order details-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Thông tin đơn hàng (#@Model.Order_id)</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-bold text-gray-600">
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bx-calendar' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Ngày đặt
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">@Model.Order_date.ToString("HH:mm dd/MM/yyyy")</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                                <!--begin::Payment method-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bx-wallet-alt' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Phương thức thanh toán
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">
+                                                        @Model.Payment.Payment_name
+                                                    </td>
+                                                </tr>
+                                                <!--end::Payment method-->
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bxs-truck' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Đơn vị giao hàng
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">@Model.Delivery.Delivery_name</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Order details-->
+                            <!--begin::Customer details-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Thông tin khách hàng</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-bold text-gray-600">
+                                                <!--begin::Customer name-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bx-user' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Họ tên
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">
+                                                        <div class="d-flex align-items-center justify-content-end">
+                                                            <!--begin:: Avatar -->
+                                                            <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                                <a href="@Url.Action("Details","Auth",new {id = Model.Account_id })">
+                                                                    <div class="symbol-label">
+                                                                        <img src="@(Model.Account.Avatar == null ? noImage : Model.Account.Avatar)" alt="Dan Wilson" class="w-100" />
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Avatar-->
+                                                            <!--begin::Name-->
+                                                            <a href="@Url.Action("Details","Auth",new {id = Model.Account_id })" class="text-gray-600 text-hover-primary">@Model.OrderAddress.OrderUsername</a>
+                                                            <!--end::Name-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Customer name-->
+                                                <!--begin::Customer email-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bxs-envelope' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Email
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">
+                                                        <a href="@Url.Action("Details","Auth",new {id = Model.Account_id })" class="text-gray-600 text-hover-primary">@Model.Account.Email</a>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Payment method-->
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <i class='bx bx-mobile-alt' style="font-size: 20px;"></i>
+                                                            </span>
+                                                            Số điện thoại
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bolder text-end">@Model.OrderAddress.OrderPhonenumber</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Customer details-->
+                        </div>
+                        <!--end::Order summary-->
+                        <!--begin::Tab content-->
+                        <div class="tab-content">
+                            <!--begin::Tab pane-->
+                            <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary">
+                                <!--begin::Orders-->
+                                <div class="d-flex flex-column gap-7 gap-lg-10">
+                                    <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                                        <!--begin::Shipping address-->
+                                        <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                            <!--begin::Card header-->
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h2>Địa chỉ nhận hàng</h2>
+                                                </div>
+                                            </div>
+                                            <!--end::Card header-->
+                                            <div class="card-body pt-0">
+                                                @Model.OrderAddress.Content,
+                                                <br>@Model.OrderAddress.Wards.Type @Model.OrderAddress.Wards.Ward_name,
+                                                <br>@Model.OrderAddress.Districts.Type @Model.OrderAddress.Districts.District_name,
+                                                <br>@Model.OrderAddress.Provinces.Province_name.
+                                            </div>
+                                        </div>
+                                        <!--end::Shipping address-->
+                                    </div>
+                                    <!--begin::Product List-->
+                                    <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                        <!--begin::Card header-->
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h2>Đơn hàng #@Model.Order_id</h2>
+                                            </div>
+                                        </div>
+                                        <!--end::Card header-->
+                                        <!--begin::Card body-->
+                                        <div class="card-body pt-0">
+                                            <div class="table-responsive">
+                                                <!--begin::Table-->
+                                                <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                                    <!--begin::Table head-->
+                                                    <thead>
+                                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                            <th class="min-w-175px">Sản phẩm</th>
+                                                            <th class="min-w-100px text-end">Số lượng</th>
+                                                            <th class="min-w-100px text-end">Đơn giá</th>
+                                                            <th class="min-w-100px text-end">Thành tiền</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!--end::Table head-->
+                                                    <!--begin::Table body-->
+                                                    <tbody class="fw-bold text-gray-600">
+                                                        @foreach (var item in listProduct)
+                                                        {
+                                                            <!--begin::Products-->
+                                                            <tr>
+                                                                <!--begin::Product-->
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <!--begin::Thumbnail-->
+                                                                        <a target="_blank" href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product.Product_name)-@item.Product.Product_id" class="symbol symbol-50px">
+                                                                            <span class="symbol-label" style="background-image:url('@item.Product.Image');"></span>
+                                                                        </a>
+                                                                        <!--end::Thumbnail-->
+                                                                        <!--begin::Title-->
+                                                                        <div class="ms-5">
+                                                                            <a target="_blank" href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product.Product_name)-@item.Product.Product_id" class="fw-bolder text-gray-600 text-hover-primary">@item.Product.Product_name</a>
+                                                                        </div>
+                                                                        <!--end::Title-->
+                                                                    </div>
+                                                                </td>
+                                                                <!--end::Product-->
+                                                                <!--begin::Quantity-->
+                                                                <td class="text-end">@item.Quantity</td>
+                                                                <!--end::Quantity-->
+                                                                <!--begin::Price-->
+                                                                <td class="text-end">
+                                                                    @item.Price.ToString("#,0₫")
+                                                                </td>
+                                                                <!--end::Price-->
+                                                                <!--begin::Total-->
+                                                                <td class="text-end">
+                                                                    @{
+                                                                        total += item.Quantity * item.Price;
+                                                                        double total2 = item.Quantity * item.Price;
+                                                                        <span>@total2.ToString("#,0₫")</span>
+                                                                    }
+                                                                </td>
+                                                                <!--end::Total-->
+                                                            </tr>
+                                                        }
+                                                        <!--begin::Subtotal-->
+                                                        <tr>
+                                                            <td colspan="3" class="text-end">Tạm tính</td>
+                                                            <td class="text-end">@total.ToString("#,0₫")</td>
+                                                        </tr>
+                                                        <!--end::Subtotal-->
+                                                        <!--begin::VAT-->
+                                                        <tr>
+                                                            <td colspan="3" class="text-end">Giảm giá</td>
+                                                            <td class="text-end">@((total + 30000 - Model.Total).ToString("#,0₫"))</td>
+                                                        </tr>
+                                                        <!--end::VAT-->
+                                                        <!--begin::Shipping-->
+                                                        <tr>
+                                                            <td colspan="3" class="text-end">Phí vận chuyển</td>
+                                                            <td class="text-end">30.000₫</td>
+                                                        </tr>
+                                                        <!--end::Shipping-->
+                                                        <!--begin::Grand total-->
+                                                        <tr>
+                                                            <td colspan="3" class="fs-3 text-dark text-end">Tổng cộng</td>
+                                                            <td class="text-danger fs-3 fw-boldest text-end">@Model.Total.ToString("#,0₫")</td>
+                                                        </tr>
+                                                        <!--end::Grand total-->
+                                                    </tbody>
+                                                    <!--end::Table head-->
+                                                </table>
+                                                <!--end::Table-->
+                                            </div>
+                                        </div>
+                                        <!--end::Card body-->
+                                    </div>
+                                    <!--end::Product List-->
+                                </div>
+                                <!--end::Orders-->
+                            </div>
+                            <!--end::Tab pane-->
+                            <!--begin::Tab pane-->
+                            <div class="tab-pane fade" id="kt_ecommerce_sales_order_history">
+                                <!--begin::Orders-->
+                                <div class="d-flex flex-column gap-7 gap-lg-10">
+                                    <!--begin::Order history-->
+                                    <div class="card card-flush py-4 flex-row-fluid">
+                                        <!--begin::Card header-->
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h2>Lịch sử mua hàng</h2>
+                                            </div>
+                                        </div>
+                                        <!--end::Card header-->
+                                        <!--begin::Card body-->
+                                        <div class="card-body pt-0">
+                                            <div class="table-responsive">
+                                                <!--begin::Table-->
+                                                <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                                    <!--begin::Table head-->
+                                                    <thead>
+                                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                            <th class="min-w-50px">ID</th>
+                                                            <th class="min-w-120px">Ngày đặt</th>
+                                                            <th class="min-w-120px">Trị giá đơn hàng</th>
+                                                            <th class="min-w-120px">Trạng thái đơn hàng</th>
+                                                            <th class="min-w-150px">Ghi chú</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!--end::Table head-->
+                                                    <!--begin::Table body-->
+                                                    <tbody class="fw-bold text-gray-600">
+                                                        @foreach (var item in orderHistory)
+                                                        {
+                                                            <tr>
+                                                                <td><a target="_blank" href="@Url.Action("Details","Order",new {id=item.Order_id})" class="text-dark">@item.Order_id</a></td>
+                                                                <!--begin::Date-->
+                                                                <td>@item.Order_date.ToString("HH:mm dd-MM-yyyy")</td>
+                                                                <!--end::Date-->
+                                                                <!--begin::Total-->
+                                                                <td>@item.Total.ToString("#,0₫")</td>
+                                                                <!--end::Total-->
+                                                                <!--begin::Status-->
+                                                                <td>
+                                                                    <!--begin::Badges-->
+                                                                    @if (item.Status == "1")
+                                                                    {
+                                                                        <div class="badge badge-light-warning">Chờ xử lý</div>
+                                                                    }
+                                                                    else if (item.Status == "2")
+                                                                    {
+                                                                        <div class="badge badge-light-info">Đang xử lý</div>
+                                                                    }
+                                                                    else if (item.Status == "3")
+                                                                    {
+                                                                        <div class="badge badge-light-success">Hoàn thành</div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="badge badge-light-danger">Bị hủy</div>
+                                                                    }
+                                                                    <!--end::Badges-->
+                                                                </td>
+                                                                <!--end::Status-->
+                                                                <!--begin::Customer Notified-->
+                                                                <td>@(item.Order_note == "" ? "Không" : item.Order_note)</td>
+                                                                <!--end::Customer Notified-->
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                    <!--end::Table head-->
+                                                </table>
+                                                <!--end::Table-->
+                                            </div>
+                                        </div>
+                                        <!--end::Card body-->
+                                    </div>
+                                    <!--end::Order history-->                                
+                                </div>
+                                <!--end::Orders-->
+                            </div>
+                            <!--end::Tab pane-->
+                        </div>
+                        <!--end::Tab content-->
+                    </div>
+                    <!--end::Order details page-->
+                </div>
+            </div>
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->

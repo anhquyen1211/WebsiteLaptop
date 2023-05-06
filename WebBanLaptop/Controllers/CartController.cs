@@ -92,28 +92,28 @@ namespace WebBanLaptop.Controllers
         //Lưu đơn hàng
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> SaveOrder(OrderAddress orderAdress, string note, string emailID, string orderID, string orderItem, string orderDiscount, string orderPrice, string orderTotal, string contentWard, string district, string province)
+        public async Task<ActionResult> SaveOrder(OrderAddress orderAdress)
         {
             try
             {
-                double priceSum = 0;
+                //double priceSum = 0;
                 string productquancheck = "0";
-                //if (Session["Discount"] != null && Session["Discountcode"] != null)
-                //{
-                //    string check_discount = Session["Discountcode"].ToString();
-                //    var discountupdatequan = db.Discounts.Where(d => d.Discount_code == check_discount).SingleOrDefault();
-                //    //khi mua hàng có sử dụng mã giảm giá và đặt hàng thành công thì trừ số lượng mã giảm giá
-                //    if (discountupdatequan.Quantity == 0 || discountupdatequan.Discount_star >= DateTime.Now || discountupdatequan.Discount_end <= DateTime.Now)
-                //    {
-                //        Notification.SetNotification3s("Mã giảm giá không thể sử dụng", "error");
-                //        return RedirectToAction("ViewCart", "Cart");
-                //    }
-                //    else
-                //    {
-                //        int newquantity = (discountupdatequan.Quantity - 1);
-                //        discountupdatequan.Quantity = newquantity;
-                //    }
-                //}
+                if (Session["Discount"] != null && Session["Discountcode"] != null)
+                {
+                    string check_discount = Session["Discountcode"].ToString();
+                    var discountupdatequan = db.Discounts.Where(d => d.Discount_code == check_discount).SingleOrDefault();
+                    //khi mua hàng có sử dụng mã giảm giá và đặt hàng thành công thì trừ số lượng mã giảm giá
+                    if (discountupdatequan.Quantity == 0 || discountupdatequan.Discount_star >= DateTime.Now || discountupdatequan.Discount_end <= DateTime.Now)
+                    {
+                        Notification.SetNotification3s("Mã giảm giá không thể sử dụng", "error");
+                        return RedirectToAction("ViewCart", "Cart");
+                    }
+                    else
+                    {
+                        int newquantity = (discountupdatequan.Quantity - 1);
+                        discountupdatequan.Quantity = newquantity;
+                    }
+                }
                 db.OrderAddresses.Add(orderAdress);
                 var cart = this.GetCart();
                 var listProduct = new List<Product>();
@@ -122,7 +122,7 @@ namespace WebBanLaptop.Controllers
                     Account_id = User.Identity.GetUserID(),
                     Create_at = DateTime.Now,
                     Create_by = User.Identity.GetUserID().ToString(),
-                    Status = "1",
+                    Status = "1", // Đơn hàng trạng thái chờ xử lý
                     Order_note = Request.Form["OrderNote"].ToString(),
                     Delivery_id = 1,
                     OrderAddressId = orderAdress.OrderAddressId,
@@ -152,7 +152,7 @@ namespace WebBanLaptop.Controllers
                         Price = _price,
                         Product_id = item.Product_id,
                         Quantity = cart.Item2[i],
-                        Status = "1",
+                        Status = "1", // Đơn hàng trạng thái chờ xử lý
                         Update_at = DateTime.Now,
                         Update_by = User.Identity.GetUserID().ToString()
                     });
@@ -164,9 +164,6 @@ namespace WebBanLaptop.Controllers
                     product.Buyturn += cart.Item2[i];
                     product.Quantity = (Convert.ToInt32(product.Quantity ?? "0") - cart.Item2[i]).ToString();
                     listProduct.Add(product);
-                    priceSum += (_price * cart.Item2[i]);
-                    orderItem += "<tr style='margin'> <td align='left' width='75%' style=' padding: 6px 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;' >" +
-                                product.Product_name + "</td><td align='left' width='25%' style=' padding: 6px 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; ' >" + product.Price.ToString("#,0₫") + "</td> </tr>";
                 }
                 //thêm dữ liệu vào table
                 if (productquancheck.Trim() != "0")
@@ -184,13 +181,6 @@ namespace WebBanLaptop.Controllers
                 Notification.SetNotification3s("Đặt hàng thành công", "success");
                 Session.Remove("Discount");
                 Session.Remove("Discountcode");
-                emailID = User.Identity.GetEmail();
-                orderID = order.Order_id.ToString();
-                orderDiscount = (priceSum + 30000 - order.Total).ToString("#,0₫");
-                orderPrice = priceSum.ToString("#,0₫");
-                orderTotal = order.Total.ToString("#,0₫");
-                //SendVerificationLinkEmail(emailID, orderID, orderItem, orderDiscount, orderPrice, orderTotal, contentWard, district, province); //nếu muốn gửi email đơn hàng thì bật lên
-                Notification.SetNotification3s("Đặt hàng thành công", "success");
                 return RedirectToAction("TrackingOrder", "Account");
             }
             catch
@@ -199,6 +189,24 @@ namespace WebBanLaptop.Controllers
                 return RedirectToAction("Checkout", "Cart");
             }
         }
+
+        //Áp dụng mã giảm giá
+        public ActionResult UseDiscountCode(string code)
+        {
+            ViewBag.DiscountPrice = 0d;
+            var discount = db.Discounts.SingleOrDefault(d => d.Discount_code == code);
+            if (discount != null)
+            {
+                if (discount.Discount_star < DateTime.Now && discount.Discount_end > DateTime.Now && discount.Quantity != 0)
+                {
+                    Session["Discountcode"] = discount.Discount_code;
+                    Session["Discount"] = discount.Discount_price;
+                    return Json(new { success = true, discountPrice = discount.Discount_price }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new { success = false, discountPrice = 0 }, JsonRequestBehavior.AllowGet);
+        }
+
         //Mapping sản phẩm lên view
         private Tuple<List<Product>, List<int>> GetCart()
         {

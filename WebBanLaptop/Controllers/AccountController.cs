@@ -2,6 +2,7 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -57,18 +58,11 @@ namespace WebBanLaptop.Controllers
             return View(model);
         }
         //Đăng xuất tài khoản
-        public ActionResult Logout(string returnUrl)
+        public ActionResult Logout()
         {
-            if (string.IsNullOrEmpty(returnUrl) && Request.UrlReferrer != null && Request.UrlReferrer.ToString().Length > 0)
-            {
-                return RedirectToAction("Logout", new { returnUrl = Request.UrlReferrer.ToString() });//tạo url khi đăng xuất, đăng xuất thành công thì quay lại trang trước đó
-            }
             FormsAuthentication.SignOut();
             Notification.SetNotification1_5s("Đăng xuất thành công", "success");
-            if (!string.IsNullOrEmpty(returnUrl))
-                return Redirect(returnUrl);
-            else
-                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
         //View đăng ký
         public ActionResult Register()
@@ -108,6 +102,97 @@ namespace WebBanLaptop.Controllers
             db.SaveChanges(); //add dữ liệu vào database          
             return RedirectToAction("Login", "Account");
         }
+        //View cập nhật thông tin cá nhân
+        [Authorize]     // Đăng nhập mới có thể truy cập
+        public ActionResult Editprofile()
+        {
+            var userId = User.Identity.GetUserID();
+            var user = db.Accounts.Where(u => u.Account_id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                return View(user);
+            }
+            return View();
+        }
+        [HttpPost]
+        //Code xử lý cập nhật thông tin cá nhân
+        [Authorize]// Đăng nhập mới có thể truy cập
+        public ActionResult Editprofile(FormCollection form)
+        {
+            var userId = User.Identity.GetUserID();
+            var account = db.Accounts.Where(m => m.Account_id == userId).FirstOrDefault();
+            if (account != null)
+            {
+                HttpPostedFileBase file = Request.Files["image-file"];
+                account.Account_id = userId;
+                account.Name = form["userName"];
+                account.Phone = form["phoneNumber"];
+                account.Update_by = userId.ToString();
+                if (file != null)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    account.Avatar = "/Content/Images/" + fileName;
+                    file.SaveAs(Path.Combine(Server.MapPath("~/Content/Images/"), fileName));
+                    account.Update_at = DateTime.Now;
+                }
+                db.Configuration.ValidateOnSaveEnabled = false;
+                UpdateModel(account);
+                Notification.SetNotification1_5s("Cập nhật thông tin tài khoản thành công", "success");
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        //View thay đổi mật khẩu
+        public ActionResult ChangePassword()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        //Code xử lý Thay đổi mật khẩu
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModels model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                int userID = User.Identity.GetUserID();
+                model.NewPassword = Crypto.Hash(model.NewPassword);
+                Account account = db.Accounts.FirstOrDefault(m => m.Account_id == userID);
+                if (model.NewPassword == account.Password)
+                {
+                    Notification.SetNotification3s("Mật khẩu mới và cũ không được trùng!", "error");
+                    return View(model);
+                }
+                account.Update_at = DateTime.Now;
+                account.Update_by = User.Identity.GetEmail();
+                account.Password = model.NewPassword;
+                db.Configuration.ValidateOnSaveEnabled = false;
+                UpdateModel(account);
+                db.SaveChanges();
+                Notification.SetNotification3s("Đổi mật khẩu thành công", "success");
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
+            return View(model);
+        }
+        //Quản lý sổ địa chỉ
+        public ActionResult Address()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                int userID = User.Identity.GetUserID();
+                var address = db.AccountAddresses.Where(m => m.Account_id == userID).ToList();
+                ViewBag.Check_address = db.AccountAddresses.Where(m => m.Account_id == userID).Count();
+                ViewBag.ProvincesList = db.Provinces.OrderBy(m => m.Province_name).ToList();
+                ViewBag.DistrictsList = db.Districts.OrderBy(m => m.Type).ThenBy(m => m.District_name).ToList();
+                ViewBag.WardsList = db.Wards.OrderBy(m => m.Type).ThenBy(m => m.Ward_name).ToList();
+                return View(address);
+            }
+            return RedirectToAction("Index", "Home");
+        }
         //Thêm mới địa chỉ 
         public ActionResult AddressCreate(AccountAddress address)
         {
@@ -117,7 +202,7 @@ namespace WebBanLaptop.Controllers
             var limit_address = db.AccountAddresses.Where(a => a.Account_id == userid).ToList();
             try
             {
-                if (limit_address.Count() == 4)//tối đa 4 ký tự
+                if (limit_address.Count() == 4)//tối đa 4 địa chỉ
                 {
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
@@ -166,6 +251,7 @@ namespace WebBanLaptop.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //Thay đổi địa chỉ mặc định
+        [HttpPost]
         public JsonResult DefaultAddress(int id)
         {
             bool result = false;
@@ -226,11 +312,16 @@ namespace WebBanLaptop.Controllers
             return Json(wardslist, JsonRequestBehavior.AllowGet);
         }
         //Lịch sử mua hàng
+        [Authorize]
         public ActionResult TrackingOrder(int? page)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return View("TrackingOrder", GetOrder(page));
+                var userId = User.Identity.GetUserID();
+                int pageSize = 9;
+                int pageNumber = (page ?? 1); //nếu null trả về 1
+                var list = db.Orders.Where(m => m.Account_id == userId).OrderByDescending(m => m.Order_date);
+                return View(list.ToPagedList(pageNumber, pageSize));
             }
             else
             {

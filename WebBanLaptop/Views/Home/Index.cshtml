@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebBanLaptop.Models.Provinces>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listHotProduct = (IEnumerable<WebBanLaptop.Models.Product>)ViewBag.HotProduct;
     var listNewProduct = (IEnumerable<WebBanLaptop.Models.Product>)ViewBag.NewProduct;
@@ -13,12 +13,56 @@
     <!-- Slider main container -->
     <div class="hero-slider-active swiper-container">
         <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper" style="height: 386px;">
             <!-- Start Hero Single Slider Item -->
             <div class="hero-single-slider-item swiper-slide">
                 <!-- Hero Slider Image -->
                 <div class="hero-slider-bg">
-                    <img src="https://lh3.googleusercontent.com/xTnCL7cNQFHweGLUNTC5jSnnT0NRHvI7MgavTiLvaHmVeYkgjb2wl80Lszl4E20QRTcxRGhXQI2vFtMx9Hy0cut_kIXIkv52=rw-w1920"
+                    <img src="https://lh3.googleusercontent.com/-pEBMbv8xl30/ZFOK3O-uSLI/AAAAAAAAArY/g3A61pkHdRc9Jy9oJ0fABMOo_hr_0SGAgCNcBGAsYHQ/w1920/thietkehaithanh-banner-laptop.png"
+                         alt="image" />
+                </div>
+                <!-- Hero Slider Content -->
+                <div class="hero-slider-wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="hero-slider-content">
+                                    <a href="#"
+                                       class="btn btn-lg btn-outline-golden" data-animation="animated fadeInDown">
+                                        Mua Ngay !!!
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-single-slider-item swiper-slide">
+                <!-- Hero Slider Image -->
+                <div class="hero-slider-bg">
+                    <img src="https://lh3.googleusercontent.com/-B-kPjhimTZU/ZFOKnOGM3RI/AAAAAAAAArQ/mMqRBukFBOMTqeq5-Jj0gjgoZJ-aNJ4iwCNcBGAsYHQ/w1920/4-laptop-gia-sock-moi-ngay.jpg"
+                         alt="image" />
+                </div>
+                <!-- Hero Slider Content -->
+                <div class="hero-slider-wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="hero-slider-content">
+                                    <a href="#"
+                                       class="btn btn-lg btn-outline-golden" data-animation="animated fadeInDown">
+                                        Mua Ngay !!!
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-single-slider-item swiper-slide">
+                <!-- Hero Slider Image -->
+                <div class="hero-slider-bg">
+                    <img src="https://lh3.googleusercontent.com/-8qLnj9kBP5w/ZFOLDJ3I8nI/AAAAAAAAArc/ax-jySZjGJc1kvS9LXffhMQDrE-H-HM6gCNcBGAsYHQ/w1920/banner-la-gi.jpg"
                          alt="image" />
                 </div>
                 <!-- Hero Slider Content -->
@@ -48,6 +92,7 @@
     </div>
 </div>
 <!-- END SLIDER -->
+
 <!-- BEGIN NEW PRODUCT -->
 <div class="section-top-gap-100 section-fluid">
     <!-- Start title -->
@@ -180,7 +225,7 @@
                                 <!-- Start product default single item -->
                                 @foreach (var item in listHotProduct)
                                 {
-                                    <div class="product-default-single-item product-color--aqua swiper-slide">
+                                    <div class="product-default-single-item product-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
@@ -274,7 +319,7 @@
                                 <!-- Start product default single item -->
                                 @foreach (var item in listLaptop)
                                 {
-                                    <div class="product-default-single-item product-color--aqua swiper-slide">
+                                    <div class="product-default-single-item product-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />
@@ -368,7 +413,7 @@
                                 <!-- Start product default single item -->
                                 @foreach (var item in listAccessory)
                                 {
-                                    <div class="product-default-single-item product-color--aqua swiper-slide">
+                                    <div class="product-default-single-item product-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
                                                 <img src="@item.Image" alt="@item.Product_name" />

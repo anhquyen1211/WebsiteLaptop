@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebBanLaptop.Models.Product>
 @{
-    ViewBag.Title = "ViewCart";
+    ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<int> quans = ViewBag.Quans as List<int>;
     double totalPrice = 0d;
@@ -145,7 +145,7 @@
                         <h3>Mã giảm giá</h3>
                         <div class="coupon_inner">
                             <p>Nhập mã giảm giá nếu có</p>
-                            <input class="mb-2" id="input-code" placeholder="Mã giảm giá" type="text">
+                            <input class="mb-2" id="input-code" placeholder="Mã giảm giá" type="text" name="discount_code">
                             <button type="button" class="btn btn-md btn-golden btn-submitcoupon">Áp dụng</button>
                         </div>
                     </div>

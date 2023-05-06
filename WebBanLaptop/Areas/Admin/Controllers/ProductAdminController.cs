@@ -98,8 +98,7 @@ namespace WebBanLaptop.Areas.Admin.Controllers
         // GET: Areas/ProductsAdmin/Create
         public ActionResult Create() //Tạo sản phẩm
         {
-            ViewBag.ListDiscount =
-                new SelectList(db.Discounts.OrderBy(d => d.Discount_price), "Disscount_id", "Discount_name", 0);
+            ViewBag.ListDiscount = new SelectList(db.Discounts.OrderBy(d => d.Discount_price), "Disscount_id", "Discount_name", 0);
             ViewBag.ListBrand = new SelectList(db.Brands, "Brand_id", "Brand_name", 0);
             ViewBag.ListGenre = new SelectList(db.Genres, "Genre_id", "Genre_name", 0);
             return View();
@@ -110,8 +109,7 @@ namespace WebBanLaptop.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Create(Product product, ProductImages productImage)
         {
-            ViewBag.ListDiscount =
-                new SelectList(db.Discounts.OrderBy(m => m.Discount_price), "Disscount_id", "Discount_name", 0);
+            ViewBag.ListDiscount = new SelectList(db.Discounts.OrderBy(m => m.Discount_price), "Disscount_id", "Discount_name", 0);
             ViewBag.ListBrand = new SelectList(db.Brands, "Brand_id", "Brand_name", 0);
             ViewBag.ListGenre = new SelectList(db.Genres, "Genre_id", "Genre_name", 0);
             try
@@ -278,12 +276,6 @@ namespace WebBanLaptop.Areas.Admin.Controllers
             {
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

@@ -1,13 +1,103 @@
 ﻿@model WebBanLaptop.Models.Product
+@using PagedList.Mvc
 @{
-    ViewBag.Title = "ProductDetail";
+    ViewBag.Title = Model.Product_name;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var listFeedback = (IEnumerable<WebBanLaptop.Models.Feedback>)ViewBag.ListFeedback;
+    var listFeedback = (PagedList.IPagedList<WebBanLaptop.Models.Feedback>)ViewBag.ListFeedback;
     var orderFeedback = (IEnumerable<WebBanLaptop.Models.Order_Detail>)ViewBag.OrderFeedback;
     var listReplyFeedback = (IEnumerable<WebBanLaptop.Models.ReplyFeedback>)ViewBag.ListReplyFeedback;
-    var relatedProduct = (List<WebBanLaptop.Models.Product>)ViewBag.RelatedProduct;
+    var listImage = (IEnumerable<WebBanLaptop.Models.ProductImages>)ViewBag.ProductImage;
+    var relatedProduct = (IEnumerable<WebBanLaptop.Models.Product>)ViewBag.RelatedProduct;
+    double onestar = 1; int c_onestar = 0; double twostar = 2; int c_twostar = 0;
+    double threestar = 3; int c_threestar = 0; ; double fourstar = 4; int c_fourstar = 0;
+    double fivestar = 5; int c_fivestar = 0; int totalrating = 0; double avg = 0;
+    string avgStar = "";
+    foreach (var item in listFeedback)
+    {
+        if (item.Product_id == Model.Product_id)
+        {
+            foreach (var orderitem in orderFeedback)
+            {
+                if (orderitem.Product_id == item.Product_id && item.Product_id == Model.Product_id && orderitem.Order.Status == "3")
+                {
+                    totalrating++;
+                    if (item.Rate_star == 1)
+                    {
+                        c_onestar++;
+                    }
+                    if (item.Rate_star == 2)
+                    {
+                        c_twostar++;
+                    }
+                    if (item.Rate_star == 3)
+                    {
+                        c_threestar++;
+                    }
+                    if (item.Rate_star == 4)
+                    {
+                        c_fourstar++;
+                    }
+                    if (item.Rate_star == 5)
+                    {
+                        c_fivestar++;
+                    }
+                }
+            }
+        }
+    }
+    avg = (onestar * c_onestar / totalrating) + (twostar * c_twostar / totalrating) + (threestar * c_threestar / totalrating) +
+    (fourstar * c_fourstar / totalrating) + (fivestar * c_fivestar / totalrating);
+    if (avg >= 1 && avg < 2)
+    {
+        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>";
+    }
+    else if ((avg >= 2) && (avg < 3))
+    {
+        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>";
+    }
+    else if ((avg >= 3) && (avg < 4))
+    {
+        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>";
+    }
+    else if ((avg >= 4) && (avg < 5))
+    {
+        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>";
+    }
+    else if (avg == 5)
+    {
+        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>" +
+               "<li class='fill'><i class='ion-android-star'></i></li>";
+    }
+    else
+    {
+        avgStar = "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>" +
+               "<li class='empty'><i class='ion-android-star'></i></li>";
+    }
 }
 <link rel="stylesheet" href="~/Content/UserCSS/simditor.css" />
+<link rel="stylesheet" href="~/Content/PagedList.css" />
 <!-- Start breadcrumb section -->
 <div class="breadcrumb-section breadcrumb-bg-color--black">
     <div class="breadcrumb-wrapper">
@@ -45,12 +135,12 @@
                             <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
                                 <img src="@Model.Image" alt="@Model.Product_name" />
                             </div>
-                            @*@foreach (var item in listImage)
-                                {
-                                    <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                        <img src="@item.image" alt="@Model.product_name" />
-                                    </div>
-                                }*@
+                            @foreach (var item in listImage)
+                            {
+                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
+                                    <img src="@item.Image" alt="@Model.Product_name" />
+                                </div>
+                            }
                         </div>
                     </div>
                     <!-- End large icon -->
@@ -60,12 +150,12 @@
                             <div class="product-image-thumb-single swiper-slide">
                                 <img class="img-fluid" src="@Model.Image" alt="@Model.Product_name" />
                             </div>
-                            @*@foreach (var item in listImage)
-                                {
-                                    <div class="product-image-thumb-single swiper-slide">
-                                        <img class="img-fluid" src="@item.Image" alt="@Model.Product_name" />
-                                    </div>
-                                }*@
+                            @foreach (var item in listImage)
+                            {
+                                <div class="product-image-thumb-single swiper-slide">
+                                    <img class="img-fluid" src="@item.Image" alt="@Model.Product_name" />
+                                </div>
+                            }
                         </div>
                         <!-- Add Arrows -->
                         <div class="gallery-thumb-arrow swiper-button-next"></div>
@@ -79,12 +169,12 @@
                     <!-- Start product detail text area -->
                     <div class="product-details-text">
                         <h3 class="title">@Model.Product_name</h3>
-                        @*<div class="d-flex align-items-center">
-                                <ul class="review-star">
-                                    @Html.Raw(avgStar)
-                                </ul>
-                                <a href="#" class="customer-review ml-2">(@ViewBag.CountFeedback đánh giá)</a>
-                            </div>*@
+                        <div class="d-flex align-items-center">
+                            <ul class="review-star">
+                                @Html.Raw(avgStar)
+                            </ul>
+                            <a href="#" class="customer-review ml-2">(@ViewBag.CountFeedback đánh giá)</a>
+                        </div>
                         @if (Model.Discount.Discount_star < DateTime.Now && Model.Discount.Discount_end > DateTime.Now && Model.Discount.Discount_price != 0)
                         {
                             <div class="price">
@@ -104,10 +194,10 @@
                             </div>
                             <ul style="list-style: inside;">
                                 <li class="ml-sm-3">
-                                    Nhập mã <strong>KAOME300</strong>  giảm thêm 3% tối đa 300.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight: 500;"> Xem chi tiết</a>
+                                    Nhập mã <strong>LQ500</strong>  giảm thêm 3% tối đa 500.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight: 500;"> Xem chi tiết</a>
                                 </li>
                                 <li class="ml-sm-3">
-                                    Nhập mã <strong>KAOME3800</strong> giảm thêm 4% tối đa 800.000đ. Áp dụng cho một số sản phẩm Apple trên 20.000.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight:500;"> Xem chi tiết</a>
+                                    Nhập mã <strong>LQ1T</strong> giảm thêm 4% tối đa 1.000.000đ. Áp dụng cho một số sản phẩm Apple trên 20.000.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight:500;"> Xem chi tiết</a>
                                 </li>
                             </ul>
                         </div>
@@ -295,7 +385,7 @@
                                                                                 {
                                                                                     if (odt.Order.Account_id == comment.Account_id && odt.Product_id == comment.Product_id && odt.Order.Status == "3")
                                                                                     {
-                                                                                        fbconfirm = "Đã mua tại KAOME";
+                                                                                        fbconfirm = "Đã mua tại LQ Shop";
                                                                                         verify = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
                                                                                     }
                                                                                 }
@@ -421,6 +511,11 @@
                                         <!-- End review comment list -->
                                     </ul>
                                     <!-- End review comment -->
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div>
+                                            @Html.PagedListPager(listFeedback, page => Url.Action("ProductDetail", new { page }))
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

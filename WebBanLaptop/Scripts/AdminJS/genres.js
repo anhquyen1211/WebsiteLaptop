@@ -36,7 +36,7 @@ $('#create__save').click(function () {
     }
     return $.ajax({
         type: "POST",
-        url: '/Genres/Create',
+        url: '/Genre/Create',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ genreName: name }),
         dataType: "json",
@@ -126,7 +126,7 @@ $('#edit__save').click(function () {
     }
     return $.ajax({
         type: "POST",
-        url: '/Genres/Edit',
+        url: '/Genre/Edit',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: genreID, genreName: name }),
         dataType: "json",
@@ -196,7 +196,7 @@ var deleteOpen = function (id, name) {
 $('#delete__submit').click(function () {
     $.ajax({
         type: "POST",
-        url: '/Genres/Delete',
+        url: '/Genre/Delete',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: genreID }),
         dataType: "json",

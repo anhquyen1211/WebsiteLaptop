@@ -223,9 +223,9 @@ $(".js-checkout").click(function (ev) {
 $(".btn-submitcoupon").click(function (ev) {
 	var input = $(ev.currentTarget).prev();
 	var _code = input.val().trim();
-	if (_code.length) {
-		$.getJSON("/cart/UseDiscountCode", { code: _code },
-			function (data, textStatus, jqXHR) {
+	if (_code.length > 0) {
+		$.getJSON("/Cart/UseDiscountCode", { code: _code },
+			function (data) {
 				if (data.success) {
 					$("#discount").attr("data-price", data.discountPrice);
 					$("#discount").attr("class", 'text-success');
@@ -257,7 +257,7 @@ $(".btn-submitcoupon").click(function (ev) {
 					})
 					Toast.fire({
 						icon: 'error',
-						title: 'Lỗi! Vui lòng kiểm tra lại'
+						title: 'Mã giảm giá không thể sử dụng'
 					})
 				}
 			}

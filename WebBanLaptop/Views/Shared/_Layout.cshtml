@@ -1,22 +1,18 @@
 ﻿<!DOCTYPE html>
-<html lang="zxx">
+<html lang="vi">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
-    <meta name="keywords" content="Laptop giá rẻ, Laptop chính hãng, KaomeSHop kaome, laptop, laptop siêu rẻ" />
-    <meta name="description" content="Cung cấp laptop và phụ kiện chính hãng">
-    <meta property="og:type" content="article" />
-    <meta property="og:image:height" content="500px" />
-    <meta property="og:image" content="@ViewBag.Image" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
-    @*<link rel="shortcut icon" href="~/Content/Images/favicon.png" type="image/png" />*@
+    <link rel="shortcut icon" href="~/Content/Images/logo/logo.png" type="image/png" />
     <link rel="stylesheet" href="~/Content/UserCSS/vendor/vendor.min.css" />
     <link rel="stylesheet" href="~/Content/UserCSS/plugins/plugins.min.css" />
-    <link rel="stylesheet" href="~/Content/UserCSS/style.css"/>
+    <link rel="stylesheet" href="~/Content/UserCSS/style.css" />
+    <link rel="stylesheet" href="~/Content/UserCSS/owl.carousel.css" />
+    <link rel="stylesheet" href="~/Content/UserCSS/slider.css" />
     <!-- Google Fonts Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome CDN -->
     <script src="https://use.fontawesome.com/576ffb49bd.js"></script>
 </head>
@@ -107,8 +103,8 @@
             </button>
         </div>
         <!-- End Offcanvas Header -->
-        <!-- Start Offcanvas Mobile Menu Wrapper -->
-        <!-- Start Mobile contact Info -->
+        <!-- Start Offcanvas Menu Wrapper -->
+        <!-- Start contact Info -->
         <div class="mobile-contact-info">
             <div class="logo">
                 <a href="@Url.Action("Index", "Home")">
@@ -137,13 +133,13 @@
 
             <ul class="user-link">
                 <li><a href="@Url.Action("ViewCart", "Cart")">Giỏ Hàng</a></li>
-                <li><a href="checkout.html">Thanh Toán</a></li>
+                <li><a href="@Url.Action("Checkout", "Cart")">Thanh Toán</a></li>
             </ul>
         </div>
 
-        <!-- End Mobile contact Info -->
+        <!-- End Mobile Info -->
     </div>
-    <!-- End Offcanvas Mobile Menu Section -->
+    <!-- End Offcanvas Menu Section -->
     @Html.Action("PreviewCart", "Cart")
     <!-- Start Offcanvas Search Bar Section -->
     <div id="search" class="search-modal">
@@ -161,75 +157,14 @@
     @Html.Partial("Footer_Layout")
     <!-- material-scrolltop button -->
     <button class="material-scrolltop" type="button"></button>
-    <!-- Start Modal Add cart -->
-    <div class="modal fade"
-         id="modalAddcart"
-         tabindex="-1"
-         role="dialog"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button"
-                                        class="close modal-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid"
-                                                 src="~/Content/Images/product/default/home-1/default-1.jpg"
-                                                 alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="modal-add-cart-info">
-                                            <i class="fa fa-check-square"></i>Đã Thêm Vào Giỏ Hàng
-                                            Thành Công !
-                                        </div>
-                                        <div class="modal-add-cart-product-cart-buttons">
-                                            <a href="cart.html">Xem Giỏ Hàng</a>
-                                            <a href="checkout.html">Thanh Toán</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 modal-border">
-                                <ul class="modal-add-cart-product-shipping-info">
-                                    <li>
-                                        <strong>
-                                            <i class="icon-shopping-cart"></i> There Are 5 Items In
-                                            Your Cart.
-                                        </strong>
-                                    </li>
-                                    <li><strong>Tổng Giá: </strong> <span>$187.00</span></li>
-                                    <li class="modal-continue-button">
-                                        <a href="#" data-bs-dismiss="modal">Tiếp Tục Mua Sắm </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Modal Add cart -->
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/UserJS/vendor/vendor.min.js"></script>
     <script src="~/Scripts/UserJS/plugins/plugins.min.js"></script>
+    <script src="~/Scripts/UserJS/plugins/owl.carousel.min.js"></script>
+    <script src="~/Scripts/UserJS/bs-carousel.js"></script>
     <script src="~/Scripts/UserJS/cookie.js"></script>
     <script src="~/Scripts/UserJS/common.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

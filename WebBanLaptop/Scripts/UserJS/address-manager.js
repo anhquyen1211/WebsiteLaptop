@@ -121,7 +121,7 @@ var SaveAddress = function () {
     var data = $("#create_address").serialize();
     $.ajax({
         type: "POST",
-        url: "/Account/AddressCreate", //kiểm tra tồn tại username, username và password đã trùng chưa (kiểm tra ở acition checksignin của cotroller Account)
+        url: "/Account/AddressCreate",
         data: data,
         success: function (result) {
             createmodal.modal('hide');
@@ -133,7 +133,7 @@ var SaveAddress = function () {
             else {
                 const Toast = Swal.mixin({
                     toast: true,
-                    position: 'top-end',
+                    position: 'top',
                     showConfirmButton: false,
                     timer: 1000,
                     didOpen: (toast) => {
@@ -346,7 +346,7 @@ $("#cancle-defalt").click(function () {
 });
 $('#btn-default-submit').click(function () {
     $.ajax({
-        type: "POST",
+        type: "post",
         url: '/Account/DefaultAddress',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: defaultID }),
@@ -418,7 +418,7 @@ $("#cancle_delete_address").click(function () {
 $('#btndelete_address').click(function () {
     delmodal.modal('hide');
     $.ajax({
-        type: "POST",
+        type: "post",
         url: '/Account/AddressDelete',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ id: idde }),
