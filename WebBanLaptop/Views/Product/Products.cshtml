@@ -94,12 +94,10 @@
                         <h6 class="sidebar-title">Tag Sản Phẩm</h6>
                         <div class="sidebar-content">
                             <div class="tag-link">
-                                <a href="#">Asus</a>
-                                <a href="#">Apple</a>
-                                <a href="#">Acer</a>
-                                <a href="#">MSI</a>
-                                <a href="#">HP</a>
-                                <a href="#">Lenovo</a>
+                                @foreach(var item in Model)
+                                {
+                                    <a href="#">@item.Brand.Brand_name</a>
+                                }
                             </div>
                         </div>
                     </div> <!-- End Single Sidebar Widget -->
@@ -111,8 +109,7 @@
                     <div class="container">
                         <div class="row">
                             <!-- Start Sort Wrapper Box -->
-                            <div class="sort-box d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column"
-                                 data-aos="fade-up" data-aos-delay="0">
+                            <div class="sort-box d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
                                 <!-- Start Sort tab Button -->
                                 <div class="sort-tablist d-flex align-items-center">
                                     <ul class="tablist nav sort-tab-btn">
@@ -121,11 +118,6 @@
                                                href="#layout-3-grid">
                                                 <img src="~/Content/Images/icons/bkg_grid.png"
                                                      alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="nav-link" data-bs-toggle="tab" href="#layout-list">
-                                                <img src="~/Content/Images/icons/bkg_list.png" alt="">
                                             </a>
                                         </li>
                                     </ul>
@@ -143,7 +135,7 @@
                                             <div id="sort-for" hidden>@ViewBag.SortBy</div>
                                             <select class="search">
                                                 <option @(ViewBag.CurrentSort == ViewBag.ResetSort ? "selected" : "")>Mặc định</option>
-                                                <option @(ViewBag.CurrentSort == ViewBag.PopularSort ? "selected" : "") value="@ViewBag.PopularSort"><a href=""> Sắp Xếp Theo Phổ Biến</a></option>
+                                                <option @(ViewBag.CurrentSort == ViewBag.PopularSort ? "selected" : "") value="@ViewBag.PopularSort">Sắp Xếp Theo Phổ Biến</option>
                                                 <option @(ViewBag.CurrentSort == ViewBag.DateAscSort ? "selected" : "") value="@ViewBag.DateAscSort">Sắp Xếp Theo Ngày: Cũ - Mới</option>
                                                 <option @(ViewBag.CurrentSort == ViewBag.DateDescSort ? "selected" : "") value="@ViewBag.DateDescSort">Sắp Xếp Theo Ngày: Mới - Cũ</option>
                                                 <option @(ViewBag.CurrentSort == ViewBag.PriceDescSort ? "selected" : "") value="@ViewBag.PriceDescSort">Sắp Xếp Theo Giá: Cao - Thấp</option>
@@ -326,145 +318,6 @@
                                         </div>
                                     </div>
                                     <!-- End Grid View Product -->
-                                    <!-- Start List View Product -->
-                                    <div class="tab-pane sort-layout-single" id="layout-list">
-                                        <div class="row">
-                                            @foreach (var item in Model)
-                                            {
-                                                <div class="col-12">
-                                                    <!-- Start Product Defautlt Single -->
-                                                    <div class="product-list-single product-color--golden">
-                                                        <a href="@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id"
-                                                           class="product-list-img-link">
-                                                            <img class="img-fluid" style="max-width:300px;" src="@item.Image" alt="">
-                                                        </a>
-                                                        <div class="product-list-content">
-                                                            <h5 class="product-list-link">
-                                                                <a href="@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id">
-                                                                    @item.Product_name
-                                                                </a>
-                                                            </h5>
-                                                            <ul class="review-star">
-                                                                @{
-                                                                    double onestar = 1; int c_onestar = 0; double truestar = 2; int c_truestar = 0;
-                                                                    double threestar = 3; int c_threestar = 0; ; double fourstar = 4; int c_fourstar = 0;
-                                                                    double fivestar = 5; int c_fivestar = 0; int totalrating = 0; double avg = 0;
-                                                                    string avgStar = "";
-                                                                    foreach (var avgfb in AvgFeedback)
-                                                                    {
-                                                                        if (avgfb.Product_id == item.Product_id && avgfb.Status == "2")
-                                                                        {
-                                                                            totalrating++;
-                                                                            if (avgfb.Rate_star == 1)
-                                                                            {
-                                                                                c_onestar++;
-                                                                            }
-                                                                            if (avgfb.Rate_star == 2)
-                                                                            {
-                                                                                c_truestar++;
-                                                                            }
-                                                                            if (avgfb.Rate_star == 3)
-                                                                            {
-                                                                                c_threestar++;
-                                                                            }
-                                                                            if (avgfb.Rate_star == 4)
-                                                                            {
-                                                                                c_fourstar++;
-                                                                            }
-                                                                            if (avgfb.Rate_star == 5)
-                                                                            {
-                                                                                c_fivestar++;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    avg = (onestar * c_onestar / totalrating) + (truestar * c_truestar / totalrating) + (threestar * c_threestar / totalrating) +
-                                                                    (fourstar * c_fourstar / totalrating) + (fivestar * c_fivestar / totalrating);
-                                                                    if (avg >= 1 && avg < 2)
-                                                                    {
-                                                                        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                    else if ((avg >= 2) && (avg < 3))
-                                                                    {
-                                                                        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                    else if ((avg >= 3) && (avg < 4))
-                                                                    {
-                                                                        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                    else if ((avg >= 4) && (avg < 5))
-                                                                    {
-                                                                        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                    else if (avg == 5)
-                                                                    {
-                                                                        avgStar = "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='fill'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        avgStar = "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>" +
-                                                                               "<li class='empty'><i class='ion-android-star'></i></li>";
-                                                                    }
-                                                                }
-                                                                @Html.Raw(avgStar)
-                                                            </ul>
-                                                            <span class="product-list-price">
-                                                                @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
-                                                                {
-                                                                    <del style="font-size:15px; margin-right:7px;">@item.Price.ToString("#,0₫")</del>
-                                                                    <span style="color: #000; font-size: 17px; font-weight: 600;">@((item.Price - item.Discount.Discount_price).ToString("#,0₫"))</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span class="price" style="font-size: 17px; color: #000; font-weight: 600;">@item.Price.ToString("#,0₫")</span>
-                                                                }
-                                                            </span>
-                                                            <div class="product-action-icon-link-list">
-                                                                <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
-                                                                <a class="btnAddToCart btn btn-lg btn-black-default-hover" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
-                                                                <a href="#" data-bs-toggle="modal"
-                                                                   data-bs-target="#modalQuickview"
-                                                                   class="btn btn-lg btn-black-default-hover">
-                                                                    <i class="icon-magnifier"></i>
-                                                                </a>
-                                                                <a href="#"
-                                                                   class="btn btn-lg btn-black-default-hover">
-                                                                    <i class="icon-heart"></i>
-                                                                </a>
-                                                                <a href="#"
-                                                                   class="btn btn-lg btn-black-default-hover">
-                                                                    <i class="icon-shuffle"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div> <!-- End Product Defautlt Single -->
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <!-- End List View Product -->
                                 </div>
                             </div>
                         </div>

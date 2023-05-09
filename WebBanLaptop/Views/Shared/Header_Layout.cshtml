@@ -23,10 +23,11 @@
                                         <a class="active main-menu-link" href="@Url.Action("Index","Home")">Trang Chủ</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Laptop","Product")">Laptop</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Accessory","Product")">Phụ kiện</a>
+                                        <a href="@Url.Action("Laptop","Product")">Sản phẩm</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="@Url.Action("Laptop","Product")">Laptop</a></li>
+                                            <li><a href="@Url.Action("Accessory","Product")">Phụ kiện</a></li>
+                                        </ul>
                                     </li>
                                     <li>
                                         <a href="#">Khuyến mãi</a>

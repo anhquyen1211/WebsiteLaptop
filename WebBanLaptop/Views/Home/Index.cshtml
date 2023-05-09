@@ -92,109 +92,10 @@
     </div>
 </div>
 <!-- END SLIDER -->
-
-<!-- BEGIN NEW PRODUCT -->
-<div class="section-top-gap-100 section-fluid">
-    <!-- Start title -->
-    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-content-gap">
-                        <div class="secton-content">
-                            <h3 class="section-title">Sản phẩm mới</h3>
-                            <p>
-                                Đặt hàng trước ngay bây giờ để nhận ưu đãi & quà tặng độc
-                                quyền
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End title -->
-    <!-- Start content product -->
-    <div class="product-wrapper" data-aos="fade-up" data-aos-delay="0">
-        <dic class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="product-slider-default-1row default-slider-nav-arrow">
-                        <!-- Slider main container -->
-                        <div class="swiper-container product-default-slider-4grid-1row">
-                            <!-- Additional required wrapper -->
-                            <div class="swiper-wrapper">
-                                <!-- Start product default single item -->
-                                @foreach (var item in listNewProduct)
-                                {
-                                    <div class="product-default-single-item product-color--golden swiper-slide">
-                                        <div class="image-box">
-                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
-                                                <img src="@item.Image" alt="@item.Product_name" />
-                                            </a>
-                                            @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
-                                            {
-                                                <div class="tag">
-                                                    <span>-@((((item.Price)/(item.Price))-((item.Price - item.Discount.Discount_price)/(item.Price))).ToString("0%"))</span>
-                                                </div>
-                                            }
-                                            <div class="action-link">
-                                                <div class="action-link-left">
-                                                    <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
-                                                    <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
-                                                </div>
-                                                <div class="action-link-right">
-                                                    <a href="#"
-                                                       data-bs-toggle="modal"
-                                                       data-bs-target="#modalQuickview">
-                                                        <i class="icon-magnifier"></i>
-                                                    </a>
-                                                    <a>
-                                                        <i class="icon-heart"></i>
-                                                    </a>
-                                                    <a>
-                                                        <i class="icon-shuffle"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="text-center">
-                                                <h6 class="title">
-                                                    <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">@item.Product_name</a>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
-                                            {
-                                                <span class="price"><del style="font-size:15px; margin-right:7px;">@item.Price.ToString("#,0₫")</del><span style="color: #000; font-size: 17px; font-weight: 600;">@((item.Price - item.Discount.Discount_price).ToString("#,0₫"))</span></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="price" style="font-size: 17px; color: #000; font-weight: 600;">@item.Price.ToString("#,0₫")</span>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                                <!-- End product default single item-->
-                            </div>
-                        </div>
-                        <!-- If we need navigation buttons -->
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div>
-                </div>
-            </div>
-        </dic>
-    </div>
-    <!-- End content product -->
-</div>
-<!-- END NEW PRODUCT -->
 <!-- BEGIN HOT PRODUCT -->
 <div class="section-top-gap-100 section-fluid">
     <!-- Start title -->
-    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="section-title-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -213,7 +114,7 @@
     </div>
     <!-- End title -->
     <!-- Start content product -->
-    <div class="product-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="product-wrapper">
         <dic class="container">
             <div class="row">
                 <div class="col-12">
@@ -289,10 +190,108 @@
     <!-- End content product -->
 </div>
 <!-- END HOT PRODUCT -->
+<!-- BEGIN NEW PRODUCT -->
+<div class="section-top-gap-100 section-fluid">
+    <!-- Start title -->
+    <div class="section-title-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-content-gap">
+                        <div class="secton-content">
+                            <h3 class="section-title">Sản phẩm mới</h3>
+                            <p>
+                                Đặt hàng trước ngay bây giờ để nhận ưu đãi & quà tặng độc
+                                quyền
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End title -->
+    <!-- Start content product -->
+    <div class="product-wrapper">
+        <dic class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-slider-default-1row default-slider-nav-arrow">
+                        <!-- Slider main container -->
+                        <div class="swiper-container product-default-slider-4grid-1row">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                <!-- Start product default single item -->
+                                @foreach (var item in listNewProduct)
+                                {
+                                    <div class="product-default-single-item product-color--golden swiper-slide">
+                                        <div class="image-box">
+                                            <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" class="image-link">
+                                                <img src="@item.Image" alt="@item.Product_name" />
+                                            </a>
+                                            @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
+                                            {
+                                                <div class="tag">
+                                                    <span>-@((((item.Price)/(item.Price))-((item.Price - item.Discount.Discount_price)/(item.Price))).ToString("0%"))</span>
+                                                </div>
+                                            }
+                                            <div class="action-link">
+                                                <div class="action-link-left">
+                                                    <input step="1" id="quantity" autocomplete="off" hidden value="1" type="number" />
+                                                    <a class="btnAddToCart" style="cursor:pointer;" data-id="@item.Product_id">Thêm vào giỏ</a>
+                                                </div>
+                                                <div class="action-link-right">
+                                                    <a href="#"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#modalQuickview">
+                                                        <i class="icon-magnifier"></i>
+                                                    </a>
+                                                    <a>
+                                                        <i class="icon-heart"></i>
+                                                    </a>
+                                                    <a>
+                                                        <i class="icon-shuffle"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="content">
+                                            <div class="text-center">
+                                                <h6 class="title">
+                                                    <a href="~/@SlugGenerator.SlugGenerator.GenerateSlug(item.Product_name)-@item.Product_id" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">@item.Product_name</a>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            @if (item.Discount.Discount_star < DateTime.Now && item.Discount.Discount_end > DateTime.Now && item.Discount.Discount_price != 0)
+                                            {
+                                                <span class="price"><del style="font-size:15px; margin-right:7px;">@item.Price.ToString("#,0₫")</del><span style="color: #000; font-size: 17px; font-weight: 600;">@((item.Price - item.Discount.Discount_price).ToString("#,0₫"))</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="price" style="font-size: 17px; color: #000; font-weight: 600;">@item.Price.ToString("#,0₫")</span>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <!-- End product default single item-->
+                            </div>
+                        </div>
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+            </div>
+        </dic>
+    </div>
+    <!-- End content product -->
+</div>
+<!-- END NEW PRODUCT -->
 <!-- BEGIN LAPTOP -->
 <div class="section-top-gap-100 section-fluid">
     <!-- Start title -->
-    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="section-title-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -307,7 +306,7 @@
     </div>
     <!-- End title -->
     <!-- Start content product -->
-    <div class="product-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="product-wrapper">
         <dic class="container">
             <div class="row">
                 <div class="col-12">
@@ -386,7 +385,7 @@
 <!-- BEGIN ACCESSORY -->
 <div class="section-top-gap-100 section-fluid">
     <!-- Start title -->
-    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="section-title-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -401,7 +400,7 @@
     </div>
     <!-- End title -->
     <!-- Start content product -->
-    <div class="product-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="product-wrapper">
         <dic class="container">
             <div class="row">
                 <div class="col-12">

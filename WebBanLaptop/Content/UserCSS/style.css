@@ -14532,7 +14532,7 @@ input {
     color: #FFF;
 }
 .btn-black-default-hover:hover {
-    background: #FE8C23;
+    background: #fe2323;
     color: #FFF;
 }
 .btn-outline-golden {
@@ -16436,7 +16436,7 @@ a.ui-button:active,
 }
 .breadcrumb-nav li:last-child {
     margin-right: 0;
-    color: #ffe500;
+    color: #0034ff;
 }
 .breadcrumb-nav li:last-child::after {
     display: none;
@@ -16450,11 +16450,11 @@ a.ui-button:active,
     background-color: #FEF5EF;
 }
 .breadcrumb-bg-color--black {
-    background-color: #000;
+    background-color: #ededed;
 }
 
 .breadcrumb-nav-color--black li a {
-    color: #fff;
+    color: #000;
 }
 .breadcrumb-nav-color--black li a:hover {
     color: #FE8C23;
@@ -16784,7 +16784,8 @@ table {
 }
 .product-details--golden .product-details-social ul li a,
 .product-details--golden .product-details-catagory ul li a {
-    color: #FE8C23;
+    color: #000;
+    font-weight: 600;
 }
 .product-details--golden .product-details-meta a:hover {
     color: #FE8C23;
@@ -16881,7 +16882,7 @@ table {
 .product-add-to-cart-btn a {
     display: inline-block;
     font-size: 16px;
-    background: #fb6e2e;
+    background: #ff0101;
     height: 50px;
     line-height: 50px;
     text-transform: uppercase;
@@ -16892,9 +16893,7 @@ table {
     font-weight: 700;
     padding: 0 50px;
 }
-.product-add-to-cart-btn a:hover {
-    background: #FE8C23;
-}
+
 
 /* Variable - Color*/
 .product-variable-color label {
@@ -18007,7 +18006,7 @@ Pages - Contact
     background: #FFF;
 }
 .header-bottom-color--yellow {
-    background: #fed100;
+    background: #00a1ff;
 }
 .header-bottom-color--black {
     background: #24262b;
@@ -18017,7 +18016,7 @@ Pages - Contact
     background: #FEF5EF;
 }
 .sticky-header.sticky.sticky-color--yellow {
-    background: #fed100;
+    background: #00a1ff;
 }
 .sticky-header.sticky.sticky-color--white {
     background: #fff;
@@ -18422,7 +18421,7 @@ Pages - Contact
     background: #FEF5EF;
 }
 .mobile-header-bg-color--yellow {
-    background: #fed100;
+    background: #00a1ff;
 }
 .mobile-header-bg-color--white {
     background: #FFF;
@@ -19267,12 +19266,12 @@ Pages - Contact
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
     cursor: hand;
     border-radius: 50%;
-    background: #FE8C23;
+    background: #b2aeab;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     transition: all 0.3s cubic-bezier(0.25, 0.25, 0, 1);
 }
 .material-scrolltop:hover {
-    background-color: #FE8C23;
+    background-color: #b2aeab;
     text-decoration: none;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 3px 15px rgba(0, 0, 0, 0.5);
 }

@@ -107,9 +107,9 @@
                     <div class="breadcrumb-nav breadcrumb-nav-color--black breadcrumb-nav-hover-color--golden">
                         <nav aria-label="breadcrumb">
                             <ul>
-                                <li><a href="index.html">Trang Chủ</a></li>
+                                <li><a href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
                                 <li>
-                                    <a href="shop-grid-sidebar-left.html">Sản phẩm</a>
+                                    <a href="#">Sản phẩm</a>
                                 </li>
                                 <li class="active" aria-current="page">
                                     Chi tiết sản phẩm
@@ -188,19 +188,6 @@
                         {
                             <div class="price" style="color: #d0021c; font-weight: 600;">@Model.Price.ToString("#,0₫")</div>
                         }
-                        <div class="sale-related">
-                            <div style="font-weight:600;">
-                                Khuyến mãi liên quan
-                            </div>
-                            <ul style="list-style: inside;">
-                                <li class="ml-sm-3">
-                                    Nhập mã <strong>LQ500</strong>  giảm thêm 3% tối đa 500.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight: 500;"> Xem chi tiết</a>
-                                </li>
-                                <li class="ml-sm-3">
-                                    Nhập mã <strong>LQ1T</strong> giảm thêm 4% tối đa 1.000.000đ. Áp dụng cho một số sản phẩm Apple trên 20.000.000đ khi thanh toán qua VNPAY-QR.<a href="#" style="color: #024dbc; font-weight:500;"> Xem chi tiết</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                     <!-- End product detail text area -->
                     <!-- Start product variable area -->
@@ -544,7 +531,7 @@
             </div>
         </div>
     </div>
-    <div class="product-wrapper" data-aos="fade-up" data-aos-delay="0">
+    <div class="product-wrapper">
         <dic class="container">
             <div class="row">
                 <div class="col-12">
