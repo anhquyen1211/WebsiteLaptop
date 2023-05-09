@@ -16032,8 +16032,8 @@ input {
     padding: 0;
     padding-bottom: 15px;
     margin-top: 15px;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: bolder;
     transition: all 0.5s ease;
     color: #777;
     position: relative;
@@ -17007,8 +17007,8 @@ table {
 }
 
 .product-details-content-tab-btn {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .product-details-content-tab {

@@ -163,6 +163,48 @@
                     </div>
                     <!-- End Thumbnail Image -->
                 </div>
+                <!-- Start product content tab section -->
+                <div class="col-sm-12 mt-5">
+                    <div class="product-details-content-tab-wrapper">
+                        <!-- Start product detail tab button -->
+                        <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
+                            <li><a class="nav-link" data-bs-toggle="tab" href="#description">Mô tả sản phẩm</a></li>
+                            <li><a class="nav-link active" data-bs-toggle="tab" href="#specification">Thông số kỹ thuật</a></li>
+                        </ul>
+                        <!-- End product detail tab button -->
+                        <!-- Start product detail tab content -->
+                        <div class="product-details-content-tab">
+                            <div class="tab-content">
+                                <div class="tab-pane" id="description">
+                                    <div class="single-tab-content-item">
+                                        @if (Model.Description != null && Model.Description != "")
+                                        {
+                                            @Html.Raw(Model.Description)
+                                        }
+                                        else
+                                        {
+                                            <span class="d-flex justify-content-center" style="font-size:20px;">Đang cập nhật</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane active show" id="specification">
+                                    <div class="single-tab-content-item specs">
+                                        @if (Model.Specifications != null && Model.Specifications != "")
+                                        {
+                                            @Html.Raw(Model.Specifications)
+                                        }
+                                        else
+                                        {
+                                            <span class="d-flex justify-content-center" style="font-size:20px;">Đang cập nhật</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End product detail tab content -->
+                    </div>
+                </div>
+                <!-- End product content tab section -->
             </div>
             <div class="col-xl-7 col-lg-6">
                 <div class="product-details-content-area product-details--golden">
@@ -271,250 +313,198 @@
                     </div>
                     <!-- End product detail social area -->
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End product detail section -->
-<!-- Start product content tab section -->
-<div class="product-details-content-tab-section section-top-gap-100">
-    <div class="content">
-        <div class="row">
-            <div class="col-12">
-                <div class="product-details-content-tab-wrapper">
-                    <!-- Start product detail tab button -->
-                    <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
-                        <li><a class="nav-link active" data-bs-toggle="tab" href="#description">Mô tả sản phẩm</a></li>
-                        <li><a class="nav-link" data-bs-toggle="tab" href="#specification">Thông số kỹ thuật</a></li>
-                        <li><a class="nav-link" data-bs-toggle="tab" href="#review">Đánh giá</a></li>
-                    </ul>
-                    <!-- End product detail tab button -->
-                    <!-- Start product detail tab content -->
-                    <div class="product-details-content-tab">
-                        <div class="tab-content">
-                            <div class="tab-pane active show" id="description">
-                                <div class="single-tab-content-item">
-                                    @if (Model.Description != null && Model.Description != "")
-                                    {
-                                        @Html.Raw(Model.Description)
-                                    }
-                                    else
-                                    {
-                                        <span class="d-flex justify-content-center" style="font-size:20px;">Đang cập nhật</span>
-                                    }
+                <div class="col-12 mt-5">
+                    <!-- Start review comment -->
+                    <div class="review-form">
+                        <div class="text-center">
+                            <h5>THÊM ĐÁNH GIÁ</h5>
+                            <span class="ms-2 text-secondary">(Đánh giá được tính khi bạn đã mua sản phẩm, chọn sao bên dưới để đánh giá sao)</span>
+                        </div>
+                        <form method="post">
+                            <input id="product_id" hidden value="@Model.Product_id" />
+                            <input id="genre_id" hidden value="@Model.Genre_id" />
+                            <input id="discount_id" hidden value="@Model.Disscount_id" />
+                            <div onmouseout="CRateSelected()" style="font-size: 23px; text-align:center; cursor:pointer;">
+                                <i id="rate1" onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star-o" aria-hidden="true"></i>
+                                <i id="rate2" onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star-o" aria-hidden="true"></i>
+                                <i id="rate3" onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star-o" aria-hidden="true"></i>
+                                <i id="rate4" onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star-o" aria-hidden="true"></i>
+                                <i id="rate5" onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <input id="lblRating" hidden value="5" />
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="default-form-box">
+                                        <label for="comment-review-text">Nội dung bình luận <span class="text-danger">*</span></label>
+                                        <textarea id="comment__con" class="rating_login" hidden></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-md btn-black-default-hover" style="width: 98px;" id="create_submit_comment" type="button"> Gửi đi </button>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="specification">
-                                <div class="single-tab-content-item specs">
-                                    @if (Model.Specifications != null && Model.Specifications != "")
-                                    {
-                                        @Html.Raw(Model.Specifications)
-                                    }
-                                    else
-                                    {
-                                        <span class="d-flex justify-content-center" style="font-size:20px;">Đang cập nhật</span>
-                                    }
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="review">
-                                <div class="single-tab-content-item">
-                                    <!-- Start review comment -->
-                                    <div class="review-form">
-                                        <div class="text-center">
-                                            <h5>THÊM ĐÁNH GIÁ</h5>
-                                            <span class="ms-2 text-secondary">(Đánh giá được tính khi bạn đã mua sản phẩm, chọn sao bên dưới để đánh giá sao)</span>
+                        </form>
+                    </div>
+                    <ul class="comment">
+                        <!-- Start review comment list -->
+                        @foreach (var comment in listFeedback)
+                        {
+                            if (comment.Product_id == Model.Product_id)
+                            {
+                                <li class="comment-list">
+                                    <div class="comment-wrapper">
+                                        <div class="comment-img">
+                                            <img src="@comment.Account.Avatar" alt="" />
                                         </div>
-                                        <form method="post">
-                                            <input id="product_id" hidden value="@Model.Product_id" />
-                                            <input id="genre_id" hidden value="@Model.Genre_id" />
-                                            <input id="discount_id" hidden value="@Model.Disscount_id" />
-                                            <div onmouseout="CRateSelected()" style="font-size: 23px; text-align:center; cursor:pointer;">
-                                                <i id="rate1" onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i id="rate2" onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i id="rate3" onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i id="rate4" onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i id="rate5" onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star-o" aria-hidden="true"></i>
-                                            </div>
-                                            <input id="lblRating" hidden value="5" />
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="default-form-box">
-                                                        <label for="comment-review-text">Nội dung bình luận <span class="text-danger">*</span></label>
-                                                        <textarea id="comment__con" class="rating_login" hidden></textarea>
-                                                    </div>
+                                        <div class="comment-content">
+                                            <div class="comment-content-top" style="margin-bottom:5px;">
+                                                <div class="comment-content-left">
+                                                    <h6 class="comment-name">
+                                                        @comment.Account.Name
+                                                        <span>
+                                                            @{ string fbconfirm = "";
+                                                                string verify = "";
+                                                                foreach (var odt in orderFeedback)
+                                                                {
+                                                                    if (odt.Order.Account_id == comment.Account_id && odt.Product_id == comment.Product_id && odt.Order.Status == "3")
+                                                                    {
+                                                                        fbconfirm = "Đã mua tại LQ Shop";
+                                                                        verify = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
+                                                                    }
+                                                                }
+                                                                <span class="fs-14px text-success">@Html.Raw(verify)<span style="margin-left:3px;">@fbconfirm</span></span>
+                                                            }
+                                                        </span>
+                                                    </h6>
+                                                    <ul class="review-star">
+                                                        @if (comment.Rate_star == 1)
+                                                        {
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                        }
+                                                        else if (comment.Rate_star == 2)
+                                                        {
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                        }
+                                                        else if (comment.Rate_star == 3)
+                                                        {
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                        }
+                                                        else if (comment.Rate_star == 4)
+                                                        {
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                        }
+                                                        else if (comment.Rate_star == 5)
+                                                        {
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                            <li class="fill"><i class="ion-android-star"></i></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                            <li class="empty"><i class="ion-android-star"></i></li>
+                                                        }
+                                                    </ul>
                                                 </div>
-                                                <div class="col-12">
-                                                    <button class="btn btn-md btn-black-default-hover" style="width: 98px;" id="create_submit_comment" type="button"> Gửi đi </button>
+                                                <div class="comment-content-right">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <a style="cursor:pointer;" onclick="CreateReplyFeedback(@comment.Feedback_id,'@comment.Account.Name')"><i class="fa fa-reply"></i>Reply</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a><i class="fa fa-reply"></i>Reply</a>
+                                                    }
                                                 </div>
                                             </div>
+                                            <div class="para-content">
+                                                <div>@Html.Raw(comment.Content)</div>
+                                                <p style="font-size: 12px; margin-bottom: 8px; color: #a5a5a5; ">@comment.Create_at.ToString("HH:mm dd-MM-yyyy")</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <form action="/" method="post">
+                                            <textarea id="reply_comment_con_@comment.Feedback_id" hidden autofocus></textarea>
+                                            <button id="submit_reply_comm_@comment.Feedback_id" hidden class="btn btn-md btn-black-default-hover" style=" margin-top: 15px; margin-bottom: 12px; width: 98px;" type="button">Gửi đi</button>
                                         </form>
                                     </div>
-                                    <ul class="comment">
-                                        <!-- Start review comment list -->
-                                        @foreach (var comment in listFeedback)
-                                        {
-                                            if (comment.Product_id == Model.Product_id)
+                                    <!-- Start review comment reply -->
+                                    @foreach (var reply in listReplyFeedback)
+                                    {
+                                        <ul class="comment-reply">
+                                            @if (reply.Feedback_id == comment.Feedback_id)
                                             {
-                                                <li class="comment-list">
+                                                <li class="comment-reply-list">
                                                     <div class="comment-wrapper">
                                                         <div class="comment-img">
-                                                            <img src="@comment.Account.Avatar" alt="" />
+                                                            <img src="@reply.Account.Avatar" alt="avatar" />
                                                         </div>
                                                         <div class="comment-content">
                                                             <div class="comment-content-top" style="margin-bottom:5px;">
                                                                 <div class="comment-content-left">
-                                                                    <h6 class="comment-name">
-                                                                        @comment.Account.Name
-                                                                        <span>
-                                                                            @{ string fbconfirm = "";
-                                                                                string verify = "";
-                                                                                foreach (var odt in orderFeedback)
-                                                                                {
-                                                                                    if (odt.Order.Account_id == comment.Account_id && odt.Product_id == comment.Product_id && odt.Order.Status == "3")
-                                                                                    {
-                                                                                        fbconfirm = "Đã mua tại LQ Shop";
-                                                                                        verify = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
-                                                                                    }
-                                                                                }
-                                                                                <span class="fs-14px text-success">@Html.Raw(verify)<span style="margin-left:3px;">@fbconfirm</span></span>
-                                                                            }
-                                                                        </span>
-                                                                    </h6>
-                                                                    <ul class="review-star">
-                                                                        @if (comment.Rate_star == 1)
-                                                                        {
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                        else if (comment.Rate_star == 2)
-                                                                        {
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                        else if (comment.Rate_star == 3)
-                                                                        {
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                        else if (comment.Rate_star == 4)
-                                                                        {
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                        else if (comment.Rate_star == 5)
-                                                                        {
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                            <li class="fill"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                            <li class="empty"><i class="ion-android-star"></i></li>
-                                                                        }
-                                                                    </ul>
+                                                                    <h6 class="comment-name">@reply.Account.Name <span class="@(reply.Account.Role == 0? "bg-role": reply.Account.Role == 2 ? "bg-role":"")">@(reply.Account.Role == 0? "Quản trị viên": reply.Account.Role == 2 ? "Biên tập viên":"")</span></h6>
                                                                 </div>
                                                                 <div class="comment-content-right">
-                                                                    @if (User.Identity.IsAuthenticated)
-                                                                    {
-                                                                        <a style="cursor:pointer;" onclick="CreateReplyFeedback(@comment.Feedback_id,'@comment.Account.Name')"><i class="fa fa-reply"></i>Reply</a>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <a><i class="fa fa-reply"></i>Reply</a>
-                                                                    }
+                                                                    <a style="cursor:pointer;" onclick="createChildReply(@comment.Feedback_id,@reply.Rep_feedback_id, '@reply.Account.Name')"><i class="fa fa-reply"></i>Reply</a>
                                                                 </div>
                                                             </div>
                                                             <div class="para-content">
-                                                                <div>@Html.Raw(comment.Content)</div>
-                                                                <p style="font-size: 12px; margin-bottom: 8px; color: #a5a5a5; ">@comment.Create_at.ToString("HH:mm dd-MM-yyyy")</p>
+                                                                <div> @Html.Raw(reply.Content)</div>
+                                                                <p style="font-size: 12px; margin-bottom: 8px; color: #a5a5a5; ">@reply.Create_at.ToString("HH:mm dd-MM-yyyy")</p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <form action="/" method="post">
-                                                            <textarea id="reply_comment_con_@comment.Feedback_id" hidden autofocus></textarea>
-                                                            <button id="submit_reply_comm_@comment.Feedback_id" hidden class="btn btn-md btn-black-default-hover" style=" margin-top: 15px; margin-bottom: 12px; width: 98px;" type="button">Gửi đi</button>
-                                                        </form>
-                                                    </div>
-                                                    <!-- Start review comment reply -->
-                                                    @foreach (var reply in listReplyFeedback)
-                                                    {
-                                                        <ul class="comment-reply">
-                                                            @if (reply.Feedback_id == comment.Feedback_id)
-                                                            {
-                                                                <li class="comment-reply-list">
-                                                                    <div class="comment-wrapper">
-                                                                        <div class="comment-img">
-                                                                            <img src="@reply.Account.Avatar" alt="avatar" />
-                                                                        </div>
-                                                                        <div class="comment-content">
-                                                                            <div class="comment-content-top" style="margin-bottom:5px;">
-                                                                                <div class="comment-content-left">
-                                                                                    <h6 class="comment-name">@reply.Account.Name <span class="@(reply.Account.Role == 0? "bg-role": reply.Account.Role == 2 ? "bg-role":"")">@(reply.Account.Role == 0? "Quản trị viên": reply.Account.Role == 2 ? "Biên tập viên":"")</span></h6>
-                                                                                </div>
-                                                                                <div class="comment-content-right">
-                                                                                    <a style="cursor:pointer;" onclick="createChildReply(@comment.Feedback_id,@reply.Rep_feedback_id, '@reply.Account.Name')"><i class="fa fa-reply"></i>Reply</a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="para-content">
-                                                                                <div> @Html.Raw(reply.Content)</div>
-                                                                                <p style="font-size: 12px; margin-bottom: 8px; color: #a5a5a5; ">@reply.Create_at.ToString("HH:mm dd-MM-yyyy")</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                        <div>
-                                                            <form action="/" method="post">
-                                                                <textarea id="childRepContent_@reply.Rep_feedback_id" hidden autofocus></textarea>
-                                                                <button id="submit_child_reply_comm_@reply.Rep_feedback_id" hidden style=" margin-top: 15px; margin-bottom: 12px; width: 98px;" class="btn btn-md btn-black-default-hover" type="button">Gửi đi</button>
-                                                            </form>
-                                                        </div>
-                                                    }
-                                                    <!-- End review comment reply -->
-
                                                 </li>
                                             }
-                                        }
-                                        <!-- End review comment list -->
-                                    </ul>
-                                    <!-- End review comment -->
-                                    <div class="d-flex align-items-center justify-content-center">
+                                        </ul>
                                         <div>
-                                            @Html.PagedListPager(listFeedback, page => Url.Action("ProductDetail", new { page }))
+                                            <form action="/" method="post">
+                                                <textarea id="childRepContent_@reply.Rep_feedback_id" hidden autofocus></textarea>
+                                                <button id="submit_child_reply_comm_@reply.Rep_feedback_id" hidden style=" margin-top: 15px; margin-bottom: 12px; width: 98px;" class="btn btn-md btn-black-default-hover" type="button">Gửi đi</button>
+                                            </form>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    }
+                                    <!-- End review comment reply -->
+
+                                </li>
+                            }
+                        }
+                        <!-- End review comment list -->
+                    </ul>
+                    <!-- End review comment -->
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div>
+                            @Html.PagedListPager(listFeedback, page => Url.Action("ProductDetail", new { page }))
                         </div>
                     </div>
-                    <!-- End product detail tab content -->
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- End product content tab section -->
+<!-- End product detail section -->
 <!-- Start product have relate -->
 <div class="product-default-slider-section section-top-gap-100 section-fluid">
     <div class="section-title-wrapper">
