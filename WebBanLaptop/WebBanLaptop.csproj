@@ -290,6 +290,7 @@
     <Content Include="Content\Images\hp-pavilion-15-eg0507tu-i5-1135g7-8gb-256gb-600x600.jpg" />
     <Content Include="Content\Images\hp-pavilion-gaming-15-dk1159tx-i7-10750h-8gb-32gb-600x600.jpg" />
     <Content Include="Content\Images\hp-zbook-firefly-14-g7-i5-8vk70av-075920-025914-600x600.jpg" />
+    <Content Include="Content\Images\icons\1f1fb-1f1f3.png" />
     <Content Include="Content\Images\icons\bkg_grid.png" />
     <Content Include="Content\Images\icons\bkg_list.png" />
     <Content Include="Content\Images\icons\icon_about1.jpg" />

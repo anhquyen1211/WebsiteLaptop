@@ -14375,7 +14375,9 @@ input {
 }
 
 .secton-content {
+    background: bisque;
     margin-top: -6px;
+    padding: 10px;
 }
 .secton-content .section-title {
     font-size: 26px;
@@ -15374,6 +15376,20 @@ input {
 .banner-style-13 .btn {
     margin-top: 20px;
 }
+/***********************
+* Begin
+************************/
+
+.information{
+    font-weight: bolder;
+}
+.information img{
+    width: 20px;
+    height: 15px;
+}
+.information .region{
+    margin-right: 30px;
+}
 
 /***********************
 * Components - Product
@@ -15381,7 +15397,7 @@ input {
 
 .product-default-single-item {
     border: 1px solid #f1f1f1;
-    height: 469px;
+    padding: 10px;
 }
 @media (max-width: 768px){
     .product-default-single-item {
@@ -15429,7 +15445,7 @@ input {
     display: flex;
     justify-content: space-between;
     height: 60px;
-    background: black;
+    background: #dcdbdb;
     line-height: 60px;
     padding: 0 20px;
     visibility: hidden;
@@ -15439,14 +15455,14 @@ input {
 }
 .product-default-single-item .action-link-left a {
     font-weight: 700;
-    color: #FFF;
+    color: #000;
     text-transform: uppercase;
     font-size: 14px;
 }
 .product-default-single-item .action-link-right a {
     font-size: 18px;
-    color: #FFF;
-    margin-right: 15px;
+    color: #000;
+    margin-right: 5px;
 }
 .product-default-single-item .action-link-right a:last-child {
     margin-right: 0;
@@ -16011,7 +16027,7 @@ input {
     line-height: 30px;
 }
 .sort-tab-btn .nav-link.active {
-    background-color: #FE8C23;
+    background-color: #000;
 }
 .sort-tab-btn .nav-link.active > img {
     filter: invert(100%);
